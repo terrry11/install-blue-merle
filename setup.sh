@@ -1,9 +1,7 @@
 #!/bin/bash
 
-echo
-echo 'Warning: Please ensure that you are running the latest firmware!'
-echo 'Device's side-switch should be in the down position (away from recessed dot).'
-echo
+printf '\nWarning: Please ensure that you are running the latest firmware!\n\n'
+printf 'Device's side-switch should be in the down position (away from recessed dot).\n\n'
 read -p "Enter the IP address: " ip_address
 ssh root@$ip_address << 'ENDSSH'
 cd /tmp
@@ -12,7 +10,5 @@ opkg update
 opkg install blue-merle.ipk
 reboot
 ENDSSH
-echo 'Device will now reboot!'
-echo
-echo 'When device is fully booted, flip side-switch to the up position (towards recessed dot) and follow on-device MCU prompts.'
-echo
+printf '\n\nDevice will now reboot!\n'
+printf 'After device boots:\nFlip side-switch to the up position (towards recessed dot) and follow on-device MCU prompts.\n\n'
