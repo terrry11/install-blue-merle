@@ -13,7 +13,7 @@ $ ./setup.sh
 ```
 Warning: Please ensure that you are running the latest firmware!
 Device's side-switch should be in the down position (away from recessed dot).
-Enter the IP address: <ip_address>
+Enter IP address: <ip_address>
 
 ...
 
