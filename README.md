@@ -1,6 +1,6 @@
 # install-blue-merle
 ## Description:
-This Bash script installs Blue-Merle onto a GL-E750 router for increased anonyminity.
+This Bash script installs Blue-Merle onto a GL-E750 router for increased anonyminity. The script prompts the user for an IP address then uses SSH to connect and perform the installation.
 
 ## Installation:
 Download the setup.sh file, make it executable, run it, then provide device IP address:
