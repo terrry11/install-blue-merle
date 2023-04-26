@@ -2,7 +2,7 @@
 
 printf '\nWarning: Please ensure that you are running the latest firmware!\n\n'
 printf 'Device's side-switch should be in the down position (away from recessed dot).\n\n'
-read -p "Enter the IP address: " ip_address
+read -p "Enter IP address: " ip_address
 ssh root@$ip_address << 'ENDSSH'
 cd /tmp
 wget https://github.com/srlabs/blue-merle/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk -O blue-merle.ipk
