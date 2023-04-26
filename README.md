@@ -18,7 +18,8 @@ Enter the IP address: <ip_address>
 ...
 
 Install complete, device will now reboot!
-After device boots: Flip side-switch to the up position (towards recessed dot) and follow on-device MCU prompts.
+After device boots:
+Flip side-switch to the up position (towards recessed dot) and follow on-device MCU prompts.
 ```
 
 ## License:
