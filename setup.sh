@@ -10,5 +10,5 @@ opkg update
 opkg install blue-merle.ipk
 reboot
 ENDSSH
-printf '\n\nDevice will now reboot!\n'
+printf '\n\nInstall complete, device will now reboot!\n'
 printf 'After device boots:\nFlip side-switch to the up position (towards recessed dot) and follow on-device MCU prompts.\n\n'

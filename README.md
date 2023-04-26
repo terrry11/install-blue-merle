@@ -14,6 +14,11 @@ $ ./setup.sh`
 Warning: Please ensure that you are running the latest firmware!
 Device's side-switch should be in the down position (away from recessed dot).
 Enter the IP address: <ip_address>
+
+...
+
+Install complete, device will now reboot!
+After device boots: Flip side-switch to the up position (towards recessed dot) and follow on-device MCU prompts.
 ```
 
 ## License:
