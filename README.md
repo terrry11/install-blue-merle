@@ -8,7 +8,7 @@ Download the setup.sh file, make it executable, run it, then provide device IP a
 ```
 curl -O https://raw.githubusercontent.com/oldstreetloft/install-blue-merle/main/setup.sh
 chmod +x setup.sh
-$ ./setup.sh`
+$ ./setup.sh
 ```
 ```
 Warning: Please ensure that you are running the latest firmware!
