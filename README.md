@@ -1,6 +1,6 @@
 # Mudi Blue-Merle Installer  <img src="https://user-images.githubusercontent.com/95660759/234453418-60f008a9-632b-4d48-bc9d-218ce659d304.png" width="50" height="50">
 ## Description:
-This Bash script installs srlab's [blue-merle]<https://github.com/srlabs/blue-merle> onto a **GL-E750 / Mudi** 4G mobile wi-fi router for increased anonyminity. The script prompts the user for an IP address then uses SSH to connect and perform the installation.
+This Bash script installs srlab's [blue-merle](https://github.com/srlabs/blue-merle) onto a **GL-E750 / Mudi** 4G mobile wi-fi router for increased anonyminity. The script prompts the user for an IP address then uses SSH to connect and perform the installation.
 
 ## Installation:
 Download the setup.sh file, make it executable, run it, then provide device IP address:
