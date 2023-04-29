@@ -25,10 +25,9 @@ get_latest
 
 # Begin SSH Connection
 ssh root@$ip_address << 'ENDSSH'
-cd /tmp
-curl -L $down_url -o blue-merle.ipk
+curl -L $down_url -o /tmp/blue-merle.ipk
 opkg update
-opkg install blue-merle.ipk
+opkg install /tmp/blue-merle.ipk
 reboot
 ENDSSH
 
