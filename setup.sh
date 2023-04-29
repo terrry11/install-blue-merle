@@ -6,8 +6,9 @@ pre_install() {
     printf "Device's side-switch should be in the down position (away from recessed dot).\n\n"
 }
 
-# Query GH API for latest download URL
-get_latest() {
+# Query IP from user and GH API for latest download URL
+init_vars() {
+    read -p "Enter IP address: " ip_address
     local api_url='https://api.github.com/repos/srlabs/blue-merle/releases/latest'
     down_url=$(curl -sL $api_url | grep browser_download | awk -F '"' '{print $4}')
 }
@@ -20,8 +21,7 @@ post_install() {
 
 # Initialization
 pre_install
-read -p "Enter IP address: " ip_address
-get_latest
+init_vars
 
 # Begin SSH Connection
 ssh root@$ip_address << 'ENDSSH'
