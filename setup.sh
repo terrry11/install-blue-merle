@@ -25,7 +25,7 @@ test() {
 remote_install() {
     ssh root@$ip_address -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 
-    # Connection check.
+    # Check for connection to the internet.
     if ping -c 1 1.1.1.1 &> /dev/null
         then
             echo "Device is connected to the internet."
@@ -66,5 +66,5 @@ ENDSSH
 # Main.
 pre_install
 init_vars
-#test
+test
 remote_install
