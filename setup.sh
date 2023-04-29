@@ -31,6 +31,7 @@ remote_install() {
             echo "Device is connected to the internet."
         else
             echo "Device is not connected to the internet."
+            echo "Please ensure connectivity and try again."
             exit 0
     fi
 
@@ -49,7 +50,7 @@ remote_install() {
     opkg update
     opkg install /tmp/blue-merle.ipk
 
-    # Error Check to see if blue-merle is installed.
+    # Error check to see if blue-merle is installed.
     if opkg list | grep blue-merle &> /dev/null
         then
             printf "\n\nInstall complete, device will now reboot!\n"
