@@ -2,8 +2,13 @@
 
 # Pre-install messages.
 pre_install() {
-    printf "\nWarning: Please ensure that you are running the latest firmware!\n\n"
-    printf "Device's side-switch should be in the down position (away from recessed dot).\n\n"
+cat << MESSAGE
+
+Warning: Please ensure that you are running the latest firmware!
+
+Device's side-switch should be in the down position (away from recessed dot).
+
+MESSAGE
 }
 
 # Query IP from user and GH API for latest download URL.
@@ -77,6 +82,7 @@ cat << MESSAGE
 After device boots:
 
 Flip side-switch into the up position. (towards recessed dot)
+
 Follow on-device MCU prompts.
 
 MESSAGE
