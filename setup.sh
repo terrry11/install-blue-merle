@@ -65,19 +65,13 @@ remote_install() {
     curl -L $down_url -o /tmp/blue-merle.ipk
     opkg update
     opkg install /tmp/blue-merle.ipk
-
-    # Error check to see if blue-merle has been properly installed.
-    if opkg list | grep blue-merle &> /dev/null
-        then
-            printf "\n\nInstall complete, device will now reboot!\n"
-            printf '\nAfter device boots:\nFlip side-switch to the up position (towards recessed dot) and follow on-device MCU prompts.\n\n'
-            sleep 1
-            reboot
-        else
-            printf "\n\nInstall Failed!\n"
-            exit 0
-    fi
 ENDSSH
+}
+
+# Post-install messages.
+post_install() {
+    printf "\n\nInstall complete!\n"
+    printf '\nAfter device boots:\nFlip side-switch to the up position (towards recessed dot) and follow on-device MCU prompts.\n\n'
 }
 
 # Main.
@@ -85,3 +79,4 @@ pre_install
 init_vars
 conn_test
 remote_install
+post_install
