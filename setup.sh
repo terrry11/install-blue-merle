@@ -58,6 +58,8 @@ remote_install() {
             exit 0
         else
             printf "\n\nStarting installation.\n"
+            printf "Device will reboot upon completion\n"
+            sleep 1
     fi
 
     # Download and install.
@@ -70,8 +72,14 @@ ENDSSH
 
 # Post-install messages.
 post_install() {
-    printf "\n\nInstall complete!\n"
-    printf '\nAfter device boots:\nFlip side-switch to the up position (towards recessed dot) and follow on-device MCU prompts.\n\n'
+cat << MESSAGE
+
+After device boots:
+
+Flip side-switch into the up position. (towards recessed dot)
+Follow on-device MCU prompts.
+
+MESSAGE
 }
 
 # Main.
