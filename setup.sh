@@ -13,12 +13,28 @@ init_vars() {
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
 
-# Test.
-test() {
-    printf '\nUser provided IP: '
-    echo $ip_address
-    printf '\nGH Download URL: '
-    echo $down_url
+# Check to see if both 1.1.1.1 and device are reachable.
+conn_test() {
+    if ping -c 1 $ip_address &> /dev/null
+        then
+            printf "\nDevice is reachable."
+            printf "\nProvided IP Address: "
+            echo $ip_address
+        else
+            echo "No route to device!"
+            echo "Please ensure connectivity to device and try again."
+            exit 0
+    fi
+    if ping -c 1 1.1.1.1 &> /dev/null
+        then
+            echo "You are connected to the internet."
+            printf '\nGH Download URL: \n'
+            echo $down_url
+        else
+            echo "You are not connected to the internet."
+            echo "Please ensure internet connectivity and try again."
+            exit 0
+    fi
 }
 
 # Commands sent over SSH stdin as a heredoc.
@@ -67,5 +83,5 @@ ENDSSH
 # Main.
 pre_install
 init_vars
-test
+conn_test
 remote_install
