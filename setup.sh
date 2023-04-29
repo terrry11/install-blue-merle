@@ -13,12 +13,6 @@ init_vars() {
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
 
-# Post-install messages.
-post_install() {
-    printf '\n\nInstall complete, device will now reboot!\n'
-    printf '\nAfter device boots:\nFlip side-switch to the up position (towards recessed dot) and follow on-device MCU prompts.\n\n'
-}
-
 # Test.
 test() {
     printf '\nIP:'
@@ -27,6 +21,7 @@ test() {
     echo $down_url
 }
 
+# Commands sent over SSH stdin as a heredoc.
 remote_install() {
     ssh root@$ip_address -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
     curl -L $down_url -o /tmp/blue-merle.ipk
@@ -36,9 +31,15 @@ remote_install() {
 ENDSSH
 }
 
+# Post-install messages.
+post_install() {
+    printf '\n\nInstall complete, device will now reboot!\n'
+    printf '\nAfter device boots:\nFlip side-switch to the up position (towards recessed dot) and follow on-device MCU prompts.\n\n'
+}
+
 # Main.
 pre_install
 init_vars
-test
+#test
 remote_install
 post_install
