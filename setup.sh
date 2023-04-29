@@ -66,7 +66,7 @@ remote_install() {
     opkg update
     opkg install /tmp/blue-merle.ipk
 
-    # Error check to see if blue-merle is installed.
+    # Error check to see if blue-merle has been properly installed.
     if opkg list | grep blue-merle &> /dev/null
         then
             printf "\n\nInstall complete, device will now reboot!\n"
