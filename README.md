@@ -7,7 +7,7 @@ Copy the following commands and run them on the host machine (laptop):
 ```
 curl -O https://raw.githubusercontent.com/oldstreetloft/install-blue-merle/main/setup.sh
 chmod +x setup.sh
-$ ./setup.sh
+./setup.sh
 ```
 ## Example:
 ```
