@@ -59,11 +59,10 @@ remote_install() {
     # Check to see if blue-merle is already installed.
     if opkg list | grep blue-merle &> /dev/null
         then
-            printf "\n\nAlready installed!\n"
+            printf "\n\nAlready installed!\n\nExiting...\n"
             exit 0
         else
-            printf "\n\nStarting installation.\n"
-            printf "Device will reboot upon completion\n"
+            printf "\n\nStarting installation.\n\nDevice will reboot upon completion...\n"
             sleep 1
     fi
 
@@ -78,8 +77,6 @@ ENDSSH
 # Post-install messages.
 post_install() {
 cat << MESSAGE
-
-After device boots:
 
 Flip side-switch into the up position. (towards recessed dot)
 
