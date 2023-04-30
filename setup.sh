@@ -56,14 +56,14 @@ ssh_install() {
         else
             printf "\nERROR:\n"
             printf "Device is not connected to the internet.\n"
-            echo "Please ensure connectivity and try again."
+            printf "Please ensure connectivity and try again.\n\n"
             exit 0
     fi
 
     # Check to see if blue-merle is already installed.
     if opkg list | grep blue-merle &> /dev/null
         then
-            printf "\nPackage is already installed!\n\nNothing to do.\n\nExiting...\n"
+            printf "\nPackage is already installed!\n\nNothing to do.\n\nExiting...\n\n"
             exit 0
         else
             printf "\nStarting installation.\n\nDevice will reboot upon completion...\n"
