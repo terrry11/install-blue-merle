@@ -18,7 +18,7 @@ init_vars() {
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
 
-# Check to see if both 1.1.1.1 and device are reachable.
+# Check to see if both device and 1.1.1.1 are reachable.
 conn_test() {
     if ping -c 1 $ip_address &> /dev/null
         then
