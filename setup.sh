@@ -18,7 +18,7 @@ init_vars() {
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
 
-# Check to see if both device and 1.1.1.1 are reachable.
+# Check to see if both device and GH are reachable.
 test_conn() {
     if ping -c 1 $ip_address &> /dev/null
         then
@@ -31,7 +31,7 @@ test_conn() {
             printf "Please ensure connectivity to device and try again.\n\n"
             exit 0
     fi
-    if ping -c 1 1.1.1.1 &> /dev/null
+    if echo $down_url &> /dev/null
         then
             echo "You are connected to the internet."
             printf '\nGH Download URL: \n'
