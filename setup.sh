@@ -22,7 +22,7 @@ parse_args() {
 
 # Query GH API for latest download URL.
 parse_github() {
-    local authrepo='srlabs/blue-merle'
+    local auth_repo='srlabs/blue-merle'
     local api_url="https://api.github.com/repos/$auth_repo/releases/latest"
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
@@ -52,8 +52,7 @@ ssh_install() {
 ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 
 # Check to see if blue-merle is already installed.
-echo
-if opkg list | grep blue-merle ; then
+echo ; if opkg list | grep blue-merle ; then
     printf "\nPackage is already installed!\n\nExiting...\n" ; exit 0
 else
     printf "\nStarting install.\n\nDevice will reboot upon completion...\n\n" ; sleep 1
