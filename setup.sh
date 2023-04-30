@@ -47,7 +47,7 @@ test_conn() {
 
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
-    ssh root@$ip_address -oHostKeyAlgorithms=+ssh-rsa 2> /dev/null << ENDSSH
+    ssh root@$ip_address -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 
     # Check for connection to the internet.
     if ping -c 1 1.1.1.1 &> /dev/null
