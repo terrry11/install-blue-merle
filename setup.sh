@@ -53,33 +53,33 @@ test_conn() {
 
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
-    ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
+ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 
-    # Check for connection to the internet.
-    if ping -c 1 1.1.1.1 &> /dev/null; then
-        printf "\nDevice is connected to the internet.\n\n"
-    else
-        printf "\nERROR:\n"
-        printf "Device is NOT connected to the internet.\n"
-        printf "Please ensure connectivity and try again.\n\n"
-        exit 0
-    fi
+# Check for connection to the internet.
+if ping -c 1 1.1.1.1 &> /dev/null; then
+    printf "\nDevice is connected to the internet.\n\n"
+else
+    printf "\nERROR:\n"
+    printf "Device is NOT connected to the internet.\n"
+    printf "Please ensure connectivity and try again.\n\n"
+    exit 0
+fi
 
-    # Check to see if blue-merle is already installed.
-    if opkg list | grep blue-merle &> /dev/null ; then
-        printf "Package is already installed!\n\nNothing to do.\n\nExiting...\n"
-        exit 0
-    else
-        printf "Starting installation.\n\nDevice will reboot upon completion...\n"
-        sleep 1
-    fi
+# Check to see if blue-merle is already installed.
+if opkg list | grep blue-merle &> /dev/null ; then
+    printf "Package is already installed!\n\nNothing to do.\n\nExiting...\n"
+    exit 0
+else
+    printf "Starting installation.\n\nDevice will reboot upon completion...\n"
+    sleep 1
+fi
 
-    # Download and install.
-    echo "Downloading blue-merle."
-    curl -L $down_url -o /tmp/blue-merle.ipk
-    opkg update
-    opkg install /tmp/blue-merle.ipk
-    reboot
+# Download and install.
+echo "Downloading blue-merle."
+curl -L $down_url -o /tmp/blue-merle.ipk
+opkg update
+opkg install /tmp/blue-merle.ipk
+reboot
 ENDSSH
 }
 
