@@ -15,8 +15,8 @@ Warning: Please ensure that you are running the latest firmware!
 Device's side-switch should be in the down position (away from recessed dot).
 Enter IP address: <ip_address>
 ...
-After device boots:
-Flip side-switch to the up position (towards recessed dot) and follow on-device MCU prompts.
+Flip side-switch into the up position. (towards recessed dot)
+Follow on-device MCU prompts.
 ```
 
 ## About blue-merle:
