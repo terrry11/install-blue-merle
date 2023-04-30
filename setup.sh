@@ -69,8 +69,9 @@ fi
 ENDSSH
 }
 #==================== MAIN ====================
-if uname -o == 'Android'
+if uname -o == 'Android' ; then
     pkg install openssh
+fi
 pre_install
 parse_args $1
 parse_github
