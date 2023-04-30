@@ -11,7 +11,13 @@ Device's side-switch should be in the down position. (away from recessed dot)
 MESSAGE
 }
 
-# Accept command-line arguments or prompt user for ip
+# Define variables.
+init_vars() {
+    author='srlabs'
+    repo='blue-merle'
+}
+
+# Define command-line arguments or prompt user for ip
 parse_args() {
     if [[ $1 ]] ; then
         ip_addr=$1
@@ -22,7 +28,7 @@ parse_args() {
 
 # Query GH API for latest download URL.
 parse_github() {
-    local api_url='https://api.github.com/repos/srlabs/blue-merle/releases/latest'
+    local api_url="https://api.github.com/repos/$author/$repo/releases/latest"
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
 
@@ -49,9 +55,9 @@ ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 
 # Check to see if blue-merle is already installed.
 if opkg list | grep blue-merle &> /dev/null ; then
-    printf "Package is already installed!\n\nExiting...\n" ; exit 0
+    printf "\nPackage is already installed!\n\nExiting...\n" ; exit 0
 else
-    printf "Starting install.\n\nDevice will reboot upon completion...\n\n" ; sleep 1
+    printf "\nStarting install.\n\nDevice will reboot upon completion...\n\n" ; sleep 1
 fi
 
 # Download and install.
@@ -78,6 +84,7 @@ MESSAGE
 
 # Main.
 pre_install
+init_vars
 parse_args $1
 parse_github
 test_conn
