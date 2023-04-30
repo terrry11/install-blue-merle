@@ -69,6 +69,12 @@ fi
 ENDSSH
 }
 #==================== MAIN ====================
+target=$(uname -o)
+if [ "$output" = "Android" ] ; then
+    printf "\nAndroid detected: Installing ssh" ; pkg install openssh
+else
+    printf "\n$output!\n"
+fi
 pre_install
 parse_args $1
 parse_github
