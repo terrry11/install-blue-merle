@@ -26,18 +26,17 @@ test_conn() {
         printf "\nDevice is reachable.\n"
     else
         printf "\nERROR:\n"
-        echo "No route to device!"
+        printf "No route to device!\n"
         printf "Please ensure connectivity to device and try again.\n\n"
         exit 0
     fi
     if [[ $down_url ]]; then
         printf "\nYou are connected to the internet.\n"
         printf '\nLatest GH Download URL: \n'
-        echo $down_url
-        echo
+        echo $down_url ; echo
     else
         printf "\nERROR:\n"
-        echo "You are NOT connected to the internet."
+        printf "You are NOT connected to the internet.\n"
         printf "Please ensure internet connectivity and try again.\n\n"
         exit 0
     fi
