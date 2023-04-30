@@ -20,9 +20,8 @@ parse_args() {
     fi
 }
 
-# Query IP from user and GH API for latest download URL.
-init_vars() {
-    parse_args $1
+# Query GH API for latest download URL.
+parse_github() {
     local api_url='https://api.github.com/repos/srlabs/blue-merle/releases/latest'
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
@@ -48,28 +47,21 @@ test_conn() {
 ssh_install() {
 ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 
-# Check for connection to the internet.
-if ping -c 1 1.1.1.1 &> /dev/null ; then
-    printf "\nDevice is connected to the internet.\n\n"
-else
-    printf "\nERROR:\n"
-    printf "Device is NOT connected to the internet.\n"
-    printf "Please ensure connectivity and try again.\n\n" ; exit 0
-fi
-
 # Check to see if blue-merle is already installed.
 if opkg list | grep blue-merle &> /dev/null ; then
-    printf "Package is already installed!\n\nNothing to do.\n\nExiting...\n"
-    exit 0
+    printf "Package is already installed!\n\nExiting...\n" ; exit 0
 else
-    printf "Starting installation.\n\nDevice will reboot upon completion...\n\n"
-    sleep 1
+    printf "Starting install.\n\nDevice will reboot upon completion...\n\n" ; sleep 1
 fi
 
 # Download and install.
-echo "Downloading blue-merle." ; curl -L $down_url -o /tmp/blue-merle.ipk
-opkg update ; opkg install /tmp/blue-merle.ipk
-reboot
+printf "Downloading blue-merle.\n"
+if curl -O -L $down_url -o /tmp/blue-merle.ipk ; then
+    opkg update ; opkg install /tmp/blue-merle.ipk ; reboot
+else
+    printf "\nERROR:\nDevice is NOT connected to the internet.\n"
+    printf "Please ensure connectivity and try again.\n\n" ; exit 0
+fi
 ENDSSH
 }
 
@@ -86,7 +78,8 @@ MESSAGE
 
 # Main.
 pre_install
-init_vars $1
+parse_args $1
+parse_github
 test_conn
 ssh_install
 post_install
