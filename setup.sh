@@ -38,7 +38,7 @@ test_conn() {
     fi
     if [[ $down_url ]] ; then
         printf "You are connected to the internet.\n"
-        printf "Latest GH Download URL: \n$down_url\n\n"
+        printf "Latest GH download URL: \n$down_url\n\n"
     else
         printf "\nERROR:\nYou are NOT connected to the internet.\n"
         printf "Please ensure internet connectivity and try again.\n\n"
