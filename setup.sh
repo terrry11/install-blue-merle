@@ -5,8 +5,7 @@
 pre_install() {
 cat << MESSAGE
 
-Warning:
-Please ensure that you are running the latest firmware!
+Warning: Please ensure that you are running the latest firmware!
 Device's side-switch should be in the down position. (away from recessed dot)
 
 MESSAGE
@@ -33,14 +32,14 @@ test_conn() {
     if ping -c 1 $ip_addr &> /dev/null ; then
         printf "\nProvided IP Address: $ip_addr\n\nDevice is responding.\n\n"
     else
-        printf "\nERROR:\nNo route to device!\nAre you connected to the right network?\n"
+        printf "\nERROR: No route to device!\nAre you connected to the right network?\n"
         printf "Please ensure connectivity to device and try again.\n\n" ; exit 0
     fi
     if [[ $down_url ]] ; then
         printf "You are connected to the internet.\n\n"
         printf "Latest GH download URL: \n$down_url\n\n"
     else
-        printf "\nERROR:\nYou are NOT connected to the internet.\n\n"
+        printf "\nERROR: You are NOT connected to the internet.\n\n"
         printf "Please ensure internet connectivity and try again.\n\n" ; exit 0
     fi
 }
@@ -59,23 +58,15 @@ fi
 # Download and install.
 printf "Downloading blue-merle.\n"
 if curl -L $down_url -o /tmp/blue-merle.ipk ; then
-    opkg update ; opkg install /tmp/blue-merle.ipk ; reboot
+    opkg update ; opkg install /tmp/blue-merle.ipk
+    printf "Device will now reboot.\nAfter reboot: "
+    printf "Flip side-switch into the up position. (towards recessed dot)\n
+    printf "Follow on-device MCU prompts.\n" ; reboot
 else
-    printf "\nERROR:\nDevice is NOT connected to the internet.\n"
+    printf "\nERROR: Device is NOT connected to the internet.\n"
     printf "Please ensure internet connectivity and try again.\n\n" ; exit 0
 fi
 ENDSSH
-}
-#==================== POST_INSTALL ====================
-# Post-install messages.
-post_install() {
-cat << MESSAGE
-
-After reboot:
-Flip side-switch into the up position. (towards recessed dot)
-Follow on-device MCU prompts.
-
-MESSAGE
 }
 #==================== MAIN ====================
 pre_install
@@ -83,4 +74,3 @@ parse_args $1
 parse_github
 test_conn
 ssh_install
-post_install
