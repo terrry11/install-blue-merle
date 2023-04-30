@@ -24,7 +24,7 @@ conn_test() {
         then
             printf "\nProvided IP Address: "
             echo $ip_address
-            printf "\nDevice is reachable.\n"
+            printf "\nDevice is reachable.\n\n"
         else
             printf "\nERROR:\n"
             echo "No route to device!"
@@ -36,6 +36,7 @@ conn_test() {
             echo "You are connected to the internet."
             printf '\nGH Download URL: \n'
             echo $down_url
+            echo
         else
             printf "\nERROR:\n"
             echo "You are not connected to the internet."
@@ -54,7 +55,7 @@ ssh_install() {
             printf "\nDevice is connected to the internet.\n"
         else
             printf "\nERROR:\n"
-            echo "Device is not connected to the internet."
+            printf "Device is not connected to the internet.\n"
             echo "Please ensure connectivity and try again."
             exit 0
     fi
