@@ -48,7 +48,7 @@ ssh_install() {
 
     # Check for connection to the internet.
     if ping -c 1 1.1.1.1 &> /dev/null; then
-        printf "\nDevice is connected to the internet.\n"
+        printf "\nDevice is connected to the internet.\n\n"
     else
         printf "\nERROR:\n"
         printf "Device is NOT connected to the internet.\n"
@@ -57,11 +57,11 @@ ssh_install() {
     fi
 
     # Check to see if blue-merle is already installed.
-    if opkg list | grep blue-merle &> /dev/null; then
-        printf "\nPackage is already installed!\n\nNothing to do.\n\nExiting...\n\n"
+    if opkg list | grep blue-merle &> /dev/null ; then
+        printf "Package is already installed!\n\nNothing to do.\n\nExiting...\n"
         exit 0
     else
-        printf "\nStarting installation.\n\nDevice will reboot upon completion...\n"
+        printf "Starting installation.\n\nDevice will reboot upon completion...\n"
         sleep 1
     fi
 
@@ -76,6 +76,7 @@ ENDSSH
 # Post-install messages.
 post_install() {
 cat << MESSAGE
+
 Flip side-switch into the up position. (towards recessed dot)
 
 Follow on-device MCU prompts.
