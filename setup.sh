@@ -53,7 +53,8 @@ ssh_install() {
 ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 
 # Check to see if blue-merle is already installed.
-if opkg list | grep blue-merle &> /dev/null ; then
+echo
+if opkg list | grep blue-merle ; then
     printf "\nPackage is already installed!\n\nExiting...\n" ; exit 0
 else
     printf "\nStarting install.\n\nDevice will reboot upon completion...\n\n" ; sleep 1
@@ -86,7 +87,6 @@ MESSAGE
 
 # Main.
 pre_install
-init_vars
 parse_args $1
 parse_github
 test_conn
