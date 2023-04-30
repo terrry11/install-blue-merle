@@ -22,7 +22,7 @@ parse_args() {
     if [[ $1 ]] ; then
         ip_addr=$1
     else
-        echo ; read -p "Enter IP address: " ip_addr
+        read -p "Enter IP address: " ip_addr
     fi
 }
 
