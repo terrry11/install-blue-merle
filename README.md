@@ -12,7 +12,7 @@ chmod +x setup.sh
 ## Example:
 ```
 Warning: Please ensure that you are running the latest firmware!
-Device's side-switch should be in the down position (away from recessed dot).
+Device's side-switch should be in the down position. (away from recessed dot)
 Enter IP address: <ip_address>
 Enter password: <password>
 ...

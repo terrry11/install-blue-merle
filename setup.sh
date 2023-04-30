@@ -4,9 +4,9 @@
 pre_install() {
 cat << MESSAGE
 
-Warning: Please ensure that you are running the latest firmware!
-
-Device's side-switch should be in the down position (away from recessed dot).
+Warning:
+Please ensure that you are running the latest firmware!
+Device's side-switch should be in the down position. (away from recessed dot)
 
 MESSAGE
 }
