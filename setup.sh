@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#-------------------- pre_install --------------------
+#==================== PRE_INSTALL ====================
 # Pre-install messages.
 pre_install() {
 cat << MESSAGE
@@ -11,7 +11,7 @@ Device's side-switch should be in the down position. (away from recessed dot)
 
 MESSAGE
 }
-#-------------------- parse_args --------------------
+#==================== PARSE_ARGS ====================
 # Define command-line arguments or prompt user for ip
 parse_args() {
     if [[ $1 ]] ; then
@@ -20,14 +20,14 @@ parse_args() {
         read -p "Enter IP address: " ip_addr
     fi
 }
-#-------------------- parse_github --------------------
+#==================== PARSE_GITHUB ====================
 # Query GH API for latest download URL.
 parse_github() {
     local auth_repo='srlabs/blue-merle'
     local api_url="https://api.github.com/repos/$auth_repo/releases/latest"
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
-#-------------------- test_conn --------------------
+#==================== TEST_CONN ====================
 # Check to see if both device and GH are responding.
 test_conn() {
     if ping -c 1 $ip_addr &> /dev/null ; then
@@ -44,7 +44,7 @@ test_conn() {
         printf "Please ensure internet connectivity and try again.\n\n" ; exit 0
     fi
 }
-#-------------------- ssh_install --------------------
+#==================== SSH_INSTALL ====================
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
 ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
@@ -66,7 +66,7 @@ else
 fi
 ENDSSH
 }
-#-------------------- post_install --------------------
+#==================== POST_INSTALL ====================
 # Post-install messages.
 post_install() {
 cat << MESSAGE
@@ -77,8 +77,7 @@ Follow on-device MCU prompts.
 
 MESSAGE
 }
-#-------------------- main --------------------
-# Main.
+#==================== MAIN ====================
 pre_install
 parse_args $1
 parse_github
