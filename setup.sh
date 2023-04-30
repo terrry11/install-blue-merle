@@ -33,16 +33,14 @@ test_conn() {
         printf "Provided IP Address: $ip_addr\n\nDevice is reachable.\n\n"
     else
         printf "\nERROR:\nNo route to device!\n"
-        printf "Please ensure connectivity to device and try again.\n\n"
-        exit 0
+        printf "Please ensure connectivity to device and try again.\n\n" ; exit 0
     fi
     if [[ $down_url ]] ; then
         printf "You are connected to the internet.\n\n"
         printf "Latest GH download URL: \n$down_url\n\n"
     else
         printf "\nERROR:\nYou are NOT connected to the internet.\n\n"
-        printf "Please ensure internet connectivity and try again.\n\n"
-        exit 0
+        printf "Please ensure internet connectivity and try again.\n\n" ; exit 0
     fi
 }
 
@@ -56,8 +54,7 @@ if ping -c 1 1.1.1.1 &> /dev/null ; then
 else
     printf "\nERROR:\n"
     printf "Device is NOT connected to the internet.\n"
-    printf "Please ensure connectivity and try again.\n\n"
-    exit 0
+    printf "Please ensure connectivity and try again.\n\n" ; exit 0
 fi
 
 # Check to see if blue-merle is already installed.
