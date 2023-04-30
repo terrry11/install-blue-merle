@@ -10,32 +10,14 @@ chmod +x setup.sh
 ./setup.sh
 ```
 ## Example:
-Script setup.sh can be run with or without command-line arguments
-### With:
+Script can be run with or without command-line arguments
+#### With:
 ```
 ./setup.sh 192.168.8.1
 ```
-```
-Warning: Please ensure that you are running the latest firmware!
-Device's side-switch should be in the down position. (away from recessed dot)
-...
-After reboot:
-Flip side-switch into the up position. (towards recessed dot)
-Follow on-device MCU prompts.
-```
-### Without:
+#### Without:
 ```
 ./setup.sh
-```
-```
-Warning: Please ensure that you are running the latest firmware!
-Device's side-switch should be in the down position. (away from recessed dot)
-Enter IP address: <ip_address>
-Enter password: <password>
-...
-After reboot:
-Flip side-switch into the up position. (towards recessed dot)
-Follow on-device MCU prompts.
 ```
 
 ## About blue-merle:
