@@ -20,7 +20,7 @@ init_vars() {
 
 # Check to see if both device and GH are reachable.
 test_conn() {
-    if ping -c 1 $ip_address &> /dev/null; then
+    if ping -c 1 $ip_address &> /dev/null ; then
         printf "\nProvided IP Address: "
         echo $ip_address
         printf "\nDevice is reachable.\n"
@@ -30,7 +30,7 @@ test_conn() {
         printf "Please ensure connectivity to device and try again.\n\n"
         exit 0
     fi
-    if [[ $down_url ]]; then
+    if [[ $down_url ]] ; then
         printf "\nYou are connected to the internet.\n"
         printf '\nLatest GH Download URL: \n'
         echo $down_url ; echo
