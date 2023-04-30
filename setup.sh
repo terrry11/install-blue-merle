@@ -22,10 +22,11 @@ init_vars() {
 conn_test() {
     if ping -c 1 $ip_address &> /dev/null
         then
-            printf "\nDevice is reachable."
             printf "\nProvided IP Address: "
             echo $ip_address
+            printf "\nDevice is reachable.\n"
         else
+            printf "\nERROR:\n"
             echo "No route to device!"
             echo "Please ensure connectivity to device and try again."
             exit 0
@@ -36,6 +37,7 @@ conn_test() {
             printf '\nGH Download URL: \n'
             echo $down_url
         else
+            printf "\nERROR:\n"
             echo "You are not connected to the internet."
             echo "Please ensure internet connectivity and try again."
             exit 0
@@ -43,14 +45,15 @@ conn_test() {
 }
 
 # Commands sent over SSH stdin as a heredoc.
-remote_install() {
+ssh_install() {
     ssh root@$ip_address -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 
     # Check for connection to the internet.
     if ping -c 1 1.1.1.1 &> /dev/null
         then
-            echo "Device is connected to the internet."
+            printf "\nDevice is connected to the internet.\n"
         else
+            printf "\nERROR:\n"
             echo "Device is not connected to the internet."
             echo "Please ensure connectivity and try again."
             exit 0
@@ -59,10 +62,10 @@ remote_install() {
     # Check to see if blue-merle is already installed.
     if opkg list | grep blue-merle &> /dev/null
         then
-            printf "\n\nAlready installed!\n\nExiting...\n"
+            printf "\nAlready installed!\n\nExiting...\n"
             exit 0
         else
-            printf "\n\nStarting installation.\n\nDevice will reboot upon completion...\n"
+            printf "\nStarting installation.\n\nDevice will reboot upon completion...\n"
             sleep 1
     fi
 
@@ -89,5 +92,5 @@ MESSAGE
 pre_install
 init_vars
 conn_test
-remote_install
+ssh_install
 post_install
