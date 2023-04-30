@@ -33,7 +33,7 @@ test_conn() {
     if ping -c 1 $ip_addr &> /dev/null ; then
         printf "\nProvided IP Address: $ip_addr\n\nDevice is responding.\n\n"
     else
-        printf "\nERROR:\nNo route to device!\n"
+        printf "\nERROR:\nNo route to device!\nAre you connected to the right network?\n"
         printf "Please ensure connectivity to device and try again.\n\n" ; exit 0
     fi
     if [[ $down_url ]] ; then
@@ -62,7 +62,7 @@ if curl -L $down_url -o /tmp/blue-merle.ipk ; then
     opkg update ; opkg install /tmp/blue-merle.ipk ; reboot
 else
     printf "\nERROR:\nDevice is NOT connected to the internet.\n"
-    printf "Please ensure connectivity and try again.\n\n" ; exit 0
+    printf "Please ensure internet connectivity and try again.\n\n" ; exit 0
 fi
 ENDSSH
 }
