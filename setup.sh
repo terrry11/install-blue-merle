@@ -70,6 +70,7 @@ ssh_install() {
     curl -L $down_url -o /tmp/blue-merle.ipk
     opkg update
     opkg install /tmp/blue-merle.ipk
+    reboot
 ENDSSH
 }
 
@@ -77,8 +78,8 @@ ENDSSH
 post_install() {
 cat << MESSAGE
 
+After reboot:
 Flip side-switch into the up position. (towards recessed dot)
-
 Follow on-device MCU prompts.
 
 MESSAGE
