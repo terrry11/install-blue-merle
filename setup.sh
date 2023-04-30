@@ -28,7 +28,7 @@ parse_github() {
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
 #==================== TEST_CONN ====================
-# Check to see if both device and GH are responding.
+# Check to see if device and GH are responding.
 test_conn() {
     if ping -c 1 $ip_addr &> /dev/null ; then
         printf "\nProvided IP Address: $ip_addr\n\nDevice is responding.\n\n"
