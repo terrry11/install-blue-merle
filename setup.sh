@@ -73,7 +73,7 @@ target=$(uname -o)
 if [ "$output" = "Android" ] ; then
     printf "\nAndroid detected: Installing ssh" ; pkg install openssh
 else
-    printf "\nHere!\n"
+    printf "\n$output!\n"
 fi
 pre_install
 parse_args $1
