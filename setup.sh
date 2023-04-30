@@ -30,22 +30,17 @@ init_vars() {
 # Check to see if both device and GH are reachable.
 test_conn() {
     if ping -c 1 $ip_addr &> /dev/null ; then
-        printf "\nProvided IP Address: "
-        echo $ip_addr
-        printf "\nDevice is reachable.\n\n"
+        printf "Provided IP Address: $ip_addr\nDevice is reachable.\n\n"
     else
-        printf "\nERROR:\n"
-        printf "No route to device!\n"
+        printf "ERROR:\nNo route to device!\n"
         printf "Please ensure connectivity to device and try again.\n\n"
         exit 0
     fi
     if [[ $down_url ]] ; then
-        printf "\nYou are connected to the internet.\n"
-        printf '\nLatest GH Download URL: \n'
-        echo $down_url ; echo
+        printf "You are connected to the internet.\n"
+        printf "Latest GH Download URL: \n$down_url\n\n"
     else
-        printf "\nERROR:\n"
-        printf "You are NOT connected to the internet.\n"
+        printf "\nERROR:\nYou are NOT connected to the internet.\n"
         printf "Please ensure internet connectivity and try again.\n\n"
         exit 0
     fi
@@ -75,10 +70,8 @@ else
 fi
 
 # Download and install.
-echo "Downloading blue-merle."
-curl -L $down_url -o /tmp/blue-merle.ipk
-opkg update
-opkg install /tmp/blue-merle.ipk
+echo "Downloading blue-merle." ; curl -L $down_url -o /tmp/blue-merle.ipk
+opkg update ; opkg install /tmp/blue-merle.ipk
 reboot
 ENDSSH
 }
