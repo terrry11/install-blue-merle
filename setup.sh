@@ -28,7 +28,7 @@ conn_test() {
         else
             printf "\nERROR:\n"
             echo "No route to device!"
-            echo "Please ensure connectivity to device and try again."
+            printf "Please ensure connectivity to device and try again.\n\n"
             exit 0
     fi
     if ping -c 1 1.1.1.1 &> /dev/null
@@ -40,14 +40,14 @@ conn_test() {
         else
             printf "\nERROR:\n"
             echo "You are not connected to the internet."
-            echo "Please ensure internet connectivity and try again."
+            printf "Please ensure internet connectivity and try again.\n\n"
             exit 0
     fi
 }
 
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
-    ssh root@$ip_address -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
+    ssh root@$ip_address -oHostKeyAlgorithms=+ssh-rsa 2> /dev/null << ENDSSH
 
     # Check for connection to the internet.
     if ping -c 1 1.1.1.1 &> /dev/null
