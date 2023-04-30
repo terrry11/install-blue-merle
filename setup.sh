@@ -34,7 +34,7 @@ test_conn() {
     if echo $down_url &> /dev/null
         then
             echo "You are connected to the internet."
-            printf '\nGH Download URL: \n'
+            printf '\nLatest GH Download URL: \n'
             echo $down_url
             echo
         else
