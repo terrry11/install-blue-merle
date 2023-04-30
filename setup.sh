@@ -24,22 +24,22 @@ test_conn() {
         then
             printf "\nProvided IP Address: "
             echo $ip_address
-            printf "\nDevice is reachable.\n\n"
+            printf "\nDevice is reachable.\n"
         else
             printf "\nERROR:\n"
             echo "No route to device!"
             printf "Please ensure connectivity to device and try again.\n\n"
             exit 0
     fi
-    if echo $down_url &> /dev/null
+    if [[ $down_url ]]
         then
-            echo "You are connected to the internet."
+            printf "\nYou are connected to the internet.\n"
             printf '\nLatest GH Download URL: \n'
             echo $down_url
             echo
         else
             printf "\nERROR:\n"
-            echo "You are not connected to the internet."
+            echo "You are NOT connected to the internet."
             printf "Please ensure internet connectivity and try again.\n\n"
             exit 0
     fi
@@ -55,7 +55,7 @@ ssh_install() {
             printf "\nDevice is connected to the internet.\n"
         else
             printf "\nERROR:\n"
-            printf "Device is not connected to the internet.\n"
+            printf "Device is NOT connected to the internet.\n"
             printf "Please ensure connectivity and try again.\n\n"
             exit 0
     fi
