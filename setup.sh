@@ -20,28 +20,26 @@ init_vars() {
 
 # Check to see if both device and GH are reachable.
 test_conn() {
-    if ping -c 1 $ip_address &> /dev/null
-        then
-            printf "\nProvided IP Address: "
-            echo $ip_address
-            printf "\nDevice is reachable.\n"
-        else
-            printf "\nERROR:\n"
-            echo "No route to device!"
-            printf "Please ensure connectivity to device and try again.\n\n"
-            exit 0
+    if ping -c 1 $ip_address &> /dev/null; then
+        printf "\nProvided IP Address: "
+        echo $ip_address
+        printf "\nDevice is reachable.\n"
+    else
+        printf "\nERROR:\n"
+        echo "No route to device!"
+        printf "Please ensure connectivity to device and try again.\n\n"
+        exit 0
     fi
-    if [[ $down_url ]]
-        then
-            printf "\nYou are connected to the internet.\n"
-            printf '\nLatest GH Download URL: \n'
-            echo $down_url
-            echo
-        else
-            printf "\nERROR:\n"
-            echo "You are NOT connected to the internet."
-            printf "Please ensure internet connectivity and try again.\n\n"
-            exit 0
+    if [[ $down_url ]]; then
+        printf "\nYou are connected to the internet.\n"
+        printf '\nLatest GH Download URL: \n'
+        echo $down_url
+        echo
+    else
+        printf "\nERROR:\n"
+        echo "You are NOT connected to the internet."
+        printf "Please ensure internet connectivity and try again.\n\n"
+        exit 0
     fi
 }
 
@@ -50,24 +48,22 @@ ssh_install() {
     ssh root@$ip_address -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 
     # Check for connection to the internet.
-    if ping -c 1 1.1.1.1 &> /dev/null
-        then
-            printf "\nDevice is connected to the internet.\n"
-        else
-            printf "\nERROR:\n"
-            printf "Device is NOT connected to the internet.\n"
-            printf "Please ensure connectivity and try again.\n\n"
-            exit 0
+    if ping -c 1 1.1.1.1 &> /dev/null; then
+        printf "\nDevice is connected to the internet.\n"
+    else
+        printf "\nERROR:\n"
+        printf "Device is NOT connected to the internet.\n"
+        printf "Please ensure connectivity and try again.\n\n"
+        exit 0
     fi
 
     # Check to see if blue-merle is already installed.
-    if opkg list | grep blue-merle &> /dev/null
-        then
-            printf "\nPackage is already installed!\n\nNothing to do.\n\nExiting...\n\n"
-            exit 0
-        else
-            printf "\nStarting installation.\n\nDevice will reboot upon completion...\n"
-            sleep 1
+    if opkg list | grep blue-merle &> /dev/null; then
+        printf "\nPackage is already installed!\n\nNothing to do.\n\nExiting...\n\n"
+        exit 0
+    else
+        printf "\nStarting installation.\n\nDevice will reboot upon completion...\n"
+        sleep 1
     fi
 
     # Download and install.
