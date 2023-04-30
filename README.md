@@ -14,6 +14,7 @@ chmod +x setup.sh
 Warning: Please ensure that you are running the latest firmware!
 Device's side-switch should be in the down position (away from recessed dot).
 Enter IP address: <ip_address>
+Enter password: <password>
 ...
 Flip side-switch into the up position. (towards recessed dot)
 Follow on-device MCU prompts.
