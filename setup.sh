@@ -22,9 +22,8 @@ parse_args() {
 
 # Query GH API for latest download URL.
 parse_github() {
-    local author='srlabs'
-    local repo='blue-merle'
-    local api_url="https://api.github.com/repos/$author/$repo/releases/latest"
+    local authrepo='srlabs/blue-merle'
+    local api_url="https://api.github.com/repos/$auth_repo/releases/latest"
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
 
