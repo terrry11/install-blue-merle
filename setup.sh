@@ -56,7 +56,7 @@ fi
 
 # Download and install.
 printf "Downloading blue-merle.\n"
-if curl -O -L $down_url -o /tmp/blue-merle.ipk ; then
+if curl -L $down_url -o /tmp/blue-merle.ipk ; then
     opkg update ; opkg install /tmp/blue-merle.ipk ; reboot
 else
     printf "\nERROR:\nDevice is NOT connected to the internet.\n"
