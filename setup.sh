@@ -30,17 +30,17 @@ init_vars() {
 # Check to see if both device and GH are reachable.
 test_conn() {
     if ping -c 1 $ip_addr &> /dev/null ; then
-        printf "Provided IP Address: $ip_addr\nDevice is reachable.\n\n"
+        printf "Provided IP Address: $ip_addr\n\nDevice is reachable.\n\n"
     else
-        printf "ERROR:\nNo route to device!\n"
+        printf "\nERROR:\nNo route to device!\n"
         printf "Please ensure connectivity to device and try again.\n\n"
         exit 0
     fi
     if [[ $down_url ]] ; then
-        printf "You are connected to the internet.\n"
+        printf "You are connected to the internet.\n\n"
         printf "Latest GH download URL: \n$down_url\n\n"
     else
-        printf "\nERROR:\nYou are NOT connected to the internet.\n"
+        printf "\nERROR:\nYou are NOT connected to the internet.\n\n"
         printf "Please ensure internet connectivity and try again.\n\n"
         exit 0
     fi
@@ -65,7 +65,7 @@ if opkg list | grep blue-merle &> /dev/null ; then
     printf "Package is already installed!\n\nNothing to do.\n\nExiting...\n"
     exit 0
 else
-    printf "Starting installation.\n\nDevice will reboot upon completion...\n"
+    printf "Starting installation.\n\nDevice will reboot upon completion...\n\n"
     sleep 1
 fi
 
