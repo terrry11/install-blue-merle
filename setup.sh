@@ -56,7 +56,7 @@ ssh_install() {
 ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 
 # Check for connection to the internet.
-if ping -c 1 1.1.1.1 &> /dev/null; then
+if ping -c 1 1.1.1.1 &> /dev/null ; then
     printf "\nDevice is connected to the internet.\n\n"
 else
     printf "\nERROR:\n"
