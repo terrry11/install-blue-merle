@@ -49,6 +49,9 @@ test_conn() {
     fi
 }
 
+#####################
+# Begin SSH session #
+#####################
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
 ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
@@ -70,6 +73,9 @@ else
 fi
 ENDSSH
 }
+###################
+# End SSH session #
+###################
 
 # Post-install messages.
 post_install() {
