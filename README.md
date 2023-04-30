@@ -12,14 +12,15 @@ chmod +x setup.sh
 ## Example:
 Script will run with or without command line arguments:
 ```
-./setup.sh 192.168.8.1
+./setup.sh <ip_address>
 ```
 ```
 Warning:
 Please ensure that you are running the latest firmware!
 Device's side-switch should be in the down position. (away from recessed dot)
+Enter IP address: <ip_address>
 ...
-Enter password:
+Enter password: <password>
 ...
 After reboot:
 Flip side-switch into the up position. (towards recessed dot)
