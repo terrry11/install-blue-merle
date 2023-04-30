@@ -46,7 +46,7 @@ test_conn() {
 #==================== SSH_INSTALL ====================
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
-ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
+ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa 2> /dev/null << ENDSSH
 
 # Check to see if blue-merle is already installed.
 echo ; if opkg list | grep blue-merle ; then
