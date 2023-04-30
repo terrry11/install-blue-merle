@@ -63,7 +63,7 @@ ssh_install() {
     # Check to see if blue-merle is already installed.
     if opkg list | grep blue-merle &> /dev/null
         then
-            printf "\nAlready installed!\n\nExiting...\n"
+            printf "\nPackage is already installed!\n\nNothing to do.\n\nExiting...\n"
             exit 0
         else
             printf "\nStarting installation.\n\nDevice will reboot upon completion...\n"
