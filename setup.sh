@@ -19,7 +19,7 @@ init_vars() {
 }
 
 # Check to see if both device and 1.1.1.1 are reachable.
-conn_test() {
+test_conn() {
     if ping -c 1 $ip_address &> /dev/null
         then
             printf "\nProvided IP Address: "
@@ -81,7 +81,6 @@ ENDSSH
 # Post-install messages.
 post_install() {
 cat << MESSAGE
-
 Flip side-switch into the up position. (towards recessed dot)
 
 Follow on-device MCU prompts.
@@ -92,6 +91,6 @@ MESSAGE
 # Main.
 pre_install
 init_vars
-conn_test
+test_conn
 ssh_install
 post_install
