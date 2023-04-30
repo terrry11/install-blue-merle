@@ -70,7 +70,7 @@ ENDSSH
 }
 #==================== MAIN ====================
 if uname -o = "Android" ; then
-    pkg install openssh
+    printf "\nAndroid detected: Installing ssh" ; pkg install openssh
 fi
 pre_install
 parse_args $1
