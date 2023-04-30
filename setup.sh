@@ -69,7 +69,7 @@ fi
 ENDSSH
 }
 #==================== MAIN ====================
-if uname -o = "Android" ; then
+if $(uname -o) = "Android" ; then
     printf "\nAndroid detected: Installing ssh" ; pkg install openssh
 fi
 pre_install
