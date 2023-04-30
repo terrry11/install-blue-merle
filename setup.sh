@@ -11,19 +11,28 @@ Device's side-switch should be in the down position (away from recessed dot).
 MESSAGE
 }
 
+# Accept command-line arguments or prompt user for ip
+parse_args() {
+    if [[ $1 ]] ; then
+        ip_addr=$1
+    else
+        echo ; read -p "Enter IP address: " ip_addr
+    fi
+}
+
 # Query IP from user and GH API for latest download URL.
 init_vars() {
-    read -p "Enter IP address: " ip_address
+    parse_args $1
     local api_url='https://api.github.com/repos/srlabs/blue-merle/releases/latest'
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
 
 # Check to see if both device and GH are reachable.
 test_conn() {
-    if ping -c 1 $ip_address &> /dev/null ; then
+    if ping -c 1 $ip_addr &> /dev/null ; then
         printf "\nProvided IP Address: "
-        echo $ip_address
-        printf "\nDevice is reachable.\n"
+        echo $ip_addr
+        printf "\nDevice is reachable.\n\n"
     else
         printf "\nERROR:\n"
         printf "No route to device!\n"
@@ -44,7 +53,7 @@ test_conn() {
 
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
-    ssh root@$ip_address -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
+    ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 
     # Check for connection to the internet.
     if ping -c 1 1.1.1.1 &> /dev/null; then
@@ -87,7 +96,7 @@ MESSAGE
 
 # Main.
 pre_install
-init_vars
+init_vars $1
 test_conn
 ssh_install
 post_install
