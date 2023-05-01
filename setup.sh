@@ -43,6 +43,16 @@ test_conn() {
         printf "Please ensure internet connectivity and try again.\n\n" ; exit 0
     fi
 }
+#==================== DETECT_OS ====================
+# Detect the OS of the host.
+detect_os() {
+    target=$(uname -o)
+    if [ "$target" = "Android" ] ; then
+        printf "\nAndroid detected: Installing ssh" ; pkg install openssh
+    else
+        printf "\nHost OS is: $target!\n"
+    fi
+}
 #==================== SSH_INSTALL ====================
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
@@ -69,14 +79,9 @@ fi
 ENDSSH
 }
 #==================== MAIN ====================
-target=$(uname -o)
-if [ "$output" = "Android" ] ; then
-    printf "\nAndroid detected: Installing ssh" ; pkg install openssh
-else
-    printf "\n$output!\n"
-fi
 pre_install
 parse_args $1
 parse_github
 test_conn
+detect_os
 ssh_install
