@@ -48,9 +48,10 @@ test_conn() {
 detect_os() {
     target=$(uname -o)
     if [ "$target" = "Android" ] ; then
-        printf "\nAndroid detected: Installing ssh" ; pkg install openssh
+        printf "\nHost OS: Android\nInstalling openssh\n\n" ; 
+        pkg update ; pkg install openssh
     else
-        printf "\nHost OS is: $target!\n"
+        printf "\nHost OS: $target!\n\n"
     fi
 }
 #==================== SSH_INSTALL ====================
