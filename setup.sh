@@ -13,10 +13,8 @@ main() {
 #==================== Define functions ====================
 # Print pre-install message.
 pre_install() {
-local pre_message="
-Warning: Please ensure that you are running the latest firmware!
-Device's side-switch should be in the down position. (away from recessed dot)"
-echo ; echo $pre_message ; echo
+printf "\nWarning: Please ensure that you are running the latest firmware!\n"
+printf "Device's side-switch should be in the down position. (away from recessed dot)\n\n"
 }
 
 # Define command-line arguments or prompt user for ip
