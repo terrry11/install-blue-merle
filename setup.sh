@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #==================== INITIALIZATION ====================
-# Define variables.
-auth_repo='cloudflare/cloudflared'
+# Define global variables.
+auth_repo='srlabs/blue-merle'
 api_url="https://api.github.com/repos/$auth_repo/releases/latest"
 pre_message="
 Warning: Please ensure that you are running the latest firmware!
@@ -11,16 +11,16 @@ Device's side-switch should be in the down position. (away from recessed dot)"
 #==================== MAIN ====================
 # Main function.
 main() {
-    pre_install             # Pre-install messages.
+    pre_install             # Pre-install message.
     parse_args $1           # Get data from user.
-    parse_github            # Find latest download URL.
-    test_conn               # Exit if no connection.
+    parse_github            # Latest download URL.
+    test_conn               # Test connection.
     detect_os               # install pkgs for android-termux.
-    ssh_install             # Install script
+    ssh_install             # Install script over ssh.
 }
 
 #==================== PRE_INSTALL ====================
-# Print pre-install messages.
+# Print pre-install message.
 pre_install() {
     echo ; echo $pre_message ; echo
 }
@@ -38,8 +38,6 @@ parse_args() {
 #==================== PARSE_GITHUB ====================
 # Query GH API for latest download URL.
 parse_github() {
-    local auth_repo='srlabs/blue-merle'
-    local api_url="https://api.github.com/repos/$auth_repo/releases/latest"
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
 
