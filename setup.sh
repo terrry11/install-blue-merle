@@ -1,15 +1,6 @@
 #!/bin/bash
 
-#==================== INITIALIZATION ====================
-# Define global variables.
-auth_repo='srlabs/blue-merle'
-api_url="https://api.github.com/repos/$auth_repo/releases/latest"
-pre_message="
-Warning: Please ensure that you are running the latest firmware!
-Device's side-switch should be in the down position. (away from recessed dot)"
-
-#==================== MAIN ====================
-# Main function.
+#==================== Main function ====================
 main() {
     pre_install             # Pre-install message.
     parse_args $1           # Get data from user.
@@ -19,13 +10,15 @@ main() {
     ssh_install             # Install script over ssh.
 }
 
-#==================== PRE_INSTALL ====================
+#==================== Define functions ====================
 # Print pre-install message.
 pre_install() {
-    echo ; echo $pre_message ; echo
+local pre_message="
+Warning: Please ensure that you are running the latest firmware!
+Device's side-switch should be in the down position. (away from recessed dot)"
+echo ; echo $pre_message ; echo
 }
 
-#==================== PARSE_ARGS ====================
 # Define command-line arguments or prompt user for ip
 parse_args() {
     if [[ $1 ]] ; then
@@ -35,13 +28,13 @@ parse_args() {
     fi
 }
 
-#==================== PARSE_GITHUB ====================
 # Query GH API for latest download URL.
 parse_github() {
+    local auth_repo='srlabs/blue-merle'
+    local api_url="https://api.github.com/repos/$auth_repo/releases/latest"
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
 
-#==================== TEST_CONN ====================
 # Check to see if device and GH are responding.
 test_conn() {
     if ping -c 1 $ip_addr &> /dev/null ; then
@@ -59,7 +52,6 @@ test_conn() {
     fi
 }
 
-#==================== DETECT_OS ====================
 # Detect the OS of the host.
 detect_os() {
     local target=$(uname -o)
@@ -71,7 +63,7 @@ detect_os() {
     fi
 }
 
-#==================== SSH_INSTALL ====================
+#==================== Start SSH connection ====================
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
 ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa 2> /dev/null << ENDSSH
