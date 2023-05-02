@@ -19,6 +19,13 @@ parse_args() {
         read -p "Enter IP address: " ip_addr
     fi
 }
+#==================== MAIN ====================
+main() {
+    parse_github        # Find latest download URL.
+    test_conn           # May exit if no connection.
+    detect_os           # Dependencies for android-termux.
+    ssh_install         # Install script
+}
 #==================== PARSE_GITHUB ====================
 # Query GH API for latest download URL.
 parse_github() {
@@ -79,10 +86,7 @@ else
 fi
 ENDSSH
 }
-#==================== MAIN ====================
+#==================== Start execution ====================
 pre_install
 parse_args $1
-parse_github
-test_conn
-detect_os
-ssh_install
+main
