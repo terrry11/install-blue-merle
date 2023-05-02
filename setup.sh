@@ -1,15 +1,30 @@
 #!/bin/bash
 
-#==================== PRE_INSTALL ====================
-# Pre-install messages.
-pre_install() {
-cat << MESSAGE
-
+#==================== INITIALIZATION ====================
+# Define variables.
+auth_repo='cloudflare/cloudflared'
+api_url="https://api.github.com/repos/$auth_repo/releases/latest"
+pre_message="
 Warning: Please ensure that you are running the latest firmware!
-Device's side-switch should be in the down position. (away from recessed dot)
+Device's side-switch should be in the down position. (away from recessed dot)"
 
-MESSAGE
+#==================== MAIN ====================
+# Main function.
+main() {
+    pre_install             # Pre-install messages.
+    parse_args $1           # Get data from user.
+    parse_github            # Find latest download URL.
+    test_conn               # Exit if no connection.
+    detect_os               # install pkgs for android-termux.
+    ssh_install             # Install script
 }
+
+#==================== PRE_INSTALL ====================
+# Print pre-install messages.
+pre_install() {
+    echo ; echo $pre_message ; echo
+}
+
 #==================== PARSE_ARGS ====================
 # Define command-line arguments or prompt user for ip
 parse_args() {
@@ -19,13 +34,7 @@ parse_args() {
         read -p "Enter IP address: " ip_addr
     fi
 }
-#==================== MAIN ====================
-main() {
-    parse_github        # Find latest download URL.
-    test_conn           # May exit if no connection.
-    detect_os           # Dependencies for android-termux.
-    ssh_install         # Install script
-}
+
 #==================== PARSE_GITHUB ====================
 # Query GH API for latest download URL.
 parse_github() {
@@ -33,6 +42,7 @@ parse_github() {
     local api_url="https://api.github.com/repos/$auth_repo/releases/latest"
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
 }
+
 #==================== TEST_CONN ====================
 # Check to see if device and GH are responding.
 test_conn() {
@@ -50,6 +60,7 @@ test_conn() {
         printf "Please ensure internet connectivity and try again.\n\n" ; exit 0
     fi
 }
+
 #==================== DETECT_OS ====================
 # Detect the OS of the host.
 detect_os() {
@@ -61,6 +72,7 @@ detect_os() {
         printf "Host OS: $target\n\n"
     fi
 }
+
 #==================== SSH_INSTALL ====================
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
@@ -86,7 +98,6 @@ else
 fi
 ENDSSH
 }
+
 #==================== Start execution ====================
-pre_install
-parse_args $1
-main
+main $1
