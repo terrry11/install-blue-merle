@@ -40,7 +40,7 @@ test_conn() {
         printf "\nERROR: No route to device!\nAre you behind a VPN or connected to the wrong network?\n"
         printf "Please ensure connectivity to device and try again.\n\n" ; exit 0
     fi
-    if [[ $down_url ]] ; then
+    if ping -c 1 1.1.1.1 &> /dev/null ; then
         printf "You are connected to the internet.\n\n"
         parse_github
         printf "Latest GH download URL: \n$down_url\n\n"
