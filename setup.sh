@@ -5,6 +5,7 @@ main() {
     pre_install             # Pre-install message.
     parse_args $1           # Get data from user.
     test_conn               # Test connection.
+    parse_github            # Find latest download URL.
     detect_os               # install pkgs for android-termux.
     ssh_install             # Install script over ssh.
 }
@@ -30,6 +31,7 @@ parse_github() {
     local auth_repo='srlabs/blue-merle'
     local api_url="https://api.github.com/repos/$auth_repo/releases/latest"
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
+    printf "Latest GH download URL: \n$down_url\n\n"
 }
 
 # Check to see if device and GH are responding.
@@ -42,8 +44,6 @@ test_conn() {
     fi
     if ping -c 1 1.1.1.1 &> /dev/null ; then
         printf "You are connected to the internet.\n\n"
-        parse_github
-        printf "Latest GH download URL: \n$down_url\n\n"
     else
         printf "\nERROR: You are NOT connected to the internet.\n\n"
         printf "Please ensure internet connectivity and try again.\n\n" ; exit 0
