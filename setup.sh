@@ -26,14 +26,6 @@ parse_args() {
     fi
 }
 
-# Query GH API for latest download URL.
-parse_github() {
-    local auth_repo='srlabs/blue-merle'
-    local api_url="https://api.github.com/repos/$auth_repo/releases/latest"
-    down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
-    printf "Latest GH download URL: \n$down_url\n\n"
-}
-
 # Check to see if device and GH are responding.
 test_conn() {
     if ping -c 1 $ip_addr &> /dev/null ; then
@@ -48,6 +40,14 @@ test_conn() {
         printf "\nERROR: You are NOT connected to the internet.\n\n"
         printf "Please ensure internet connectivity and try again.\n\n" ; exit 0
     fi
+}
+
+# Query GH API for latest download URL.
+parse_github() {
+    local auth_repo='srlabs/blue-merle'
+    local api_url="https://api.github.com/repos/$auth_repo/releases/latest"
+    down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
+    printf "Latest GH download URL: \n$down_url\n\n"
 }
 
 # Detect the OS of the host.
