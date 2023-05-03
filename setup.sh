@@ -4,10 +4,10 @@
 main() {
     pre_install             # Pre-install message.
     parse_args $1           # Get data from user.
-    test_conn               # Test connection.
-    parse_github            # Find latest download URL.
-    detect_os               # install pkgs for android-termux.
-    ssh_install             # Install script over ssh.
+    test_conn               # Exit if no connection.
+    parse_github            # Query GH for latest download URL.
+    detect_os               # Install dependencies.
+    ssh_install             # Install script.
 }
 
 #==================== Define functions ====================
