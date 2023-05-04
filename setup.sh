@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#==================== Initialize variables ====================
+default_url="https://github.com/cloudflare/cloudflared/releases/download/2023.5.0/cloudflared-linux-arm"
+valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
+ip_addr=""
+
 #==================== Main function ====================
 main() {
     pre_install             # Pre-install message.
@@ -23,13 +28,12 @@ parse_args() {
     get_ip
 }
 
-# Read and validate IP Address.
+# Read and validate IP Address prompt for re-entry if the input is invalid.
 get_ip() {
-    local ip_format="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
-    if [[ ! $ip_addr =~ $ip_format ]] ; then
+    if [[ ! $ip_addr =~ $valid_ip ]] ; then
         while true; do
             echo ; read -p "Enter IP address: " ip_addr
-            if [[ $ip_addr =~ $ip_format ]] ; then
+            if [[ $ip_addr =~ $valid_ip ]] ; then
                 break
             else
                 printf "\nERROR: Invalid IP address format.\nPlease enter a valid IP address.\n"
@@ -62,7 +66,7 @@ parse_github() {
     if [ -z "$down_url" ] ; then
         printf "ERROR: Unable to retrieve latest download URL from GitHub API.\n"
         printf "\nUsing default download URL.\n"
-        down_url="https://github.com/srlabs/blue-merle/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
+        down_url=$default_url
     else
         printf "Latest GH download URL: \n$down_url\n\n"
     fi
