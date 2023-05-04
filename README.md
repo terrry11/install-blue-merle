@@ -11,6 +11,7 @@ curl -O https://raw.githubusercontent.com/oldstreetloft/install-blue-merle/main/
 Script will run with or without command line arguments:
 ```
 ./setup.sh <ip_address>
+./setup.sh
 ```
 ```
 Warning: Please ensure that you are running the latest firmware!
