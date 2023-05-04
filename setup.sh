@@ -79,14 +79,14 @@ detect_os() {
     fi
 }
 
-#==================== Start SSH connection ====================
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
+#==================== Start SSH connection ====================
 ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 
 # Check to see if blue-merle is already installed.
 echo ; if opkg list | grep blue-merle ; then
-    printf "\nPackage is already installed!\n\nExiting...\n" ; exit 1
+    printf "\nPackage is already installed!\n\nExiting...\n\n" ; exit 1
 else
     printf "\nStarting install.\n\nDevice will reboot upon completion...\n\n"
     sleep 1
@@ -104,6 +104,7 @@ else
     printf "Please ensure internet connectivity and try again.\n\n" ; exit 1
 fi
 ENDSSH
+#==================== End SSH connection ====================
 }
 
 #==================== Start execution ====================
