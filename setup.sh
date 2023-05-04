@@ -24,6 +24,11 @@ parse_args() {
     else
         read -p "Enter IP address: " ip_addr
     fi
+    # Validate IP address
+    if [[ ! $ip_addr =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    printf "\nERROR: Invalid IP address format. Please enter a valid IP address.\n"
+    parse_args
+    fi
 }
 
 # Check to see if device and 1.1.1.1 are responding.
@@ -47,9 +52,10 @@ parse_github() {
     local auth_repo='srlabs/blue-merle'
     local api_url="https://api.github.com/repos/$auth_repo/releases/latest"
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
-    if [ -z "$down_url" ]; then
+    if [ -z "$down_url" ] ; then
         printf "ERROR: Unable to retrieve latest download URL from GitHub API.\n"
-        exit 1
+        printf "\nUsing default download URL.\n"
+        down_url="https://github.com/srlabs/blue-merle/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
     else
         printf "Latest GH download URL: \n$down_url\n\n"
     fi
