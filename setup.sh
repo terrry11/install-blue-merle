@@ -26,8 +26,8 @@ parse_args() {
     fi
     # Validate IP address
     if [[ ! $ip_addr =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-    printf "\nERROR: Invalid IP address format. Please enter a valid IP address.\n"
-    parse_args
+        printf "\nERROR: Invalid IP address format. Please enter a valid IP address.\n"
+        parse_args
     fi
 }
 
