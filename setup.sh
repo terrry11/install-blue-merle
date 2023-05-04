@@ -17,17 +17,24 @@ printf "\nWarning: Please ensure that you are running the latest firmware!\n"
 printf "Device's side-switch should be in the down position. (away from recessed dot)\n\n"
 }
 
-# Define command-line arguments or prompt user for ip
+# Define command-line arguments, prompt user for ip, and validate inputs.
 parse_args() {
-    if [[ $1 ]] ; then
-        ip_addr=$1
-    else
-        read -p "Enter IP address: " ip_addr
-    fi
-    # Validate IP address
-    if [[ ! $ip_addr =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-        printf "\nERROR: Invalid IP address format. Please enter a valid IP address.\n"
-        parse_args
+    if [[ $1 ]] ; then ip_addr=$1 ; fi
+    get_ip
+}
+
+# Read and validate IP Address
+get_ip() {
+    local ip_format="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
+    if [[ ! $ip_addr =~ $ip_format ]] ; then
+        while true; do
+            echo ; read -p "Enter IP address: " ip_addr
+            if [[ $ip_addr =~ $ip_format ]]; then
+                break
+            else
+                printf "\nERROR: Invalid IP address format.\nPlease enter a valid IP address.\n"
+            fi
+        done
     fi
 }
 
@@ -81,7 +88,8 @@ ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 echo ; if opkg list | grep blue-merle ; then
     printf "\nPackage is already installed!\n\nExiting...\n" ; exit 1
 else
-    printf "\nStarting install.\n\nDevice will reboot upon completion...\n\n" ; sleep 1
+    printf "\nStarting install.\n\nDevice will reboot upon completion...\n\n"
+    sleep 1
 fi
 
 # Download and install.
