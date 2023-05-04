@@ -72,7 +72,7 @@ parse_github() {
 detect_os() {
     local target=$(uname -o)
     if [ "$target" = "Android" ] ; then
-        printf "Host OS: $target\n\nInstalling: openssh\n\n" ; 
+        printf "Host OS: $target\n\nInstalling: openssh\n\n"
         pkg update ; pkg install openssh ; echo
     else
         printf "Host OS: $target\n\n"
