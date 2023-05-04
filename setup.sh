@@ -17,13 +17,13 @@ printf "\nWarning: Please ensure that you are running the latest firmware!\n"
 printf "Device's side-switch should be in the down position. (away from recessed dot)\n\n"
 }
 
-# Define command-line arguments, prompt user for ip, and validate inputs.
+# Define command-line arguments, prompt user for ip, validate inputs.
 parse_args() {
     if [[ $1 ]] ; then ip_addr=$1 ; fi
     get_ip
 }
 
-# Read and validate IP Address
+# Read and validate IP Address.
 get_ip() {
     local ip_format="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
     if [[ ! $ip_addr =~ $ip_format ]] ; then
