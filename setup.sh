@@ -41,8 +41,8 @@ get_ip() {
 
 # Check to see if device and Github are responding.
 test_conn() {
-    # Check for device with ping.
-    if ping -c 1 $ip_addr &> /dev/null ; then
+    # Check for SSH on port 22 with netcat.
+    if nc -z -w1 $ip_addr 22 &> /dev/null ; then
         printf "\nProvided IP Address: $ip_addr\n\nDevice is responding.\n\n"
     else
         printf "\nERROR: No route to device!\nAre you behind a VPN or connected to the wrong network?\n"
