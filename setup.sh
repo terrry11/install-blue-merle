@@ -29,7 +29,7 @@ get_ip() {
     if [[ ! $ip_addr =~ $ip_format ]] ; then
         while true; do
             echo ; read -p "Enter IP address: " ip_addr
-            if [[ $ip_addr =~ $ip_format ]]; then
+            if [[ $ip_addr =~ $ip_format ]] ; then
                 break
             else
                 printf "\nERROR: Invalid IP address format.\nPlease enter a valid IP address.\n"

@@ -3,11 +3,9 @@
 This Bash script installs *[blue-merle](https://github.com/srlabs/blue-merle)* onto a **GL-E750 / Mudi** 4G mobile wi-fi router for increased anonyminity. The script prompts the user for an IP address then uses SSH to connect and perform the installation.
 
 ## Installation:
-Copy the following commands, paste them into a terminal window on the local machine, then tap Enter key:
+Copy the following command, and paste it into a terminal window on the local machine, then tap Enter key:
 ```
-curl -O https://raw.githubusercontent.com/oldstreetloft/install-blue-merle/main/setup.sh
-chmod +x setup.sh
-./setup.sh
+curl -O https://raw.githubusercontent.com/oldstreetloft/install-blue-merle/main/setup.sh ; chmod +x setup.sh ; ./setup.sh
 ```
 ## Example:
 Script will run with or without command line arguments:
