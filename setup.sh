@@ -1,10 +1,5 @@
 #!/bin/bash
 
-#==================== Initialize variables ====================
-default_url="https://github.com/cloudflare/cloudflared/releases/download/2023.5.0/cloudflared-linux-arm"
-valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
-ip_addr=""
-
 #==================== Main function ====================
 main() {
     pre_install             # Pre-install message.
@@ -24,12 +19,14 @@ printf "Device's side-switch should be in the down position. (away from recessed
 
 # Define command-line arguments, prompt user for ip, validate inputs.
 parse_args() {
+    # IP address
     if [[ $1 ]] ; then ip_addr=$1 ; fi
     get_ip
 }
 
-# Read and validate IP Address prompt for re-entry if the input is invalid.
+# Read and validate IP Address.
 get_ip() {
+    local valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
     if [[ ! $ip_addr =~ $valid_ip ]] ; then
         while true; do
             echo ; read -p "Enter IP address: " ip_addr
@@ -44,12 +41,14 @@ get_ip() {
 
 # Check to see if device and Github are responding.
 test_conn() {
+    # Check for SSH on port 22 with netcat.
     if nc -z -w1 $ip_addr 22 &> /dev/null ; then
         printf "\nProvided IP Address: $ip_addr\n\nDevice is responding.\n\n"
     else
         printf "\nERROR: No route to device!\nAre you behind a VPN or connected to the wrong network?\n"
         printf "Please ensure connectivity to device and try again.\n\n" ; exit 1
     fi
+    # Check for internet connectivity with ping.
     if ping -c 1 github.com &> /dev/null ; then
         printf "You are connected to the internet.\n\n"
     else
@@ -60,26 +59,29 @@ test_conn() {
 
 # Query GH API for latest download URL.
 parse_github() {
-    local auth_repo='srlabs/blue-merle'
-    local api_url="https://api.github.com/repos/$auth_repo/releases/latest"
+    local auth='srlabs'
+    local repo='blue-merle'
+    local api_url="https://api.github.com/repos/$auth/$repo/releases/latest"
+    local latest=$(curl -sL $api_url | grep tag_name | awk -F \" '{print $4}') &> /dev/null
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
     if [ -z "$down_url" ] ; then
+        # Using fallback URL.
         printf "ERROR: Unable to retrieve latest download URL from GitHub API.\n"
         printf "\nUsing default download URL.\n"
-        down_url=$default_url
+        down_url="https://github.com/srlabs/blue-merle/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
     else
-        printf "Latest GH download URL: \n$down_url\n\n"
+    printf "Latest $repo version: $latest\n\nLatest GH download URL: \n$down_url\n\n"
     fi
 }
 
 # Detect the OS of the host, install dependencies.
 detect_os() {
     local target=$(uname -o)
+    printf "Host OS: $target\n\n"
+    # Install android-termux dependencies.
     if [ "$target" = "Android" ] ; then
-        printf "Host OS: $target\n\nInstalling: openssh\n\n"
+        printf "Installing: openssh\n\n"
         pkg update ; pkg install openssh ; echo
-    else
-        printf "Host OS: $target\n\n"
     fi
 }
 
