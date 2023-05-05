@@ -107,7 +107,7 @@ printf "Downloading blue-merle.\n"
 if curl -L $down_url -o /tmp/blue-merle.ipk ; then
     opkg update ; opkg install /tmp/blue-merle.ipk
     printf "Device will now reboot.\nAfter reboot: "
-    printf "Flip side-switch into the up position. (towards recessed dot)\n
+    printf "Flip side-switch into the up position. (towards recessed dot)\n"
     printf "Follow on-device MCU prompts.\n" ; reboot
 else
     printf "\nERROR: Device is NOT connected to the internet.\n"
