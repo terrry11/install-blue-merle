@@ -92,7 +92,7 @@ detect_os() {
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
 #==================== Start SSH connection ====================
-ssh root@$ip_addr -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
+ssh root@$ip_addr -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
 
 # Check to see if blue-merle is already installed.
 echo ; if opkg list | grep blue-merle ; then
