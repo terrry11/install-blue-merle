@@ -95,7 +95,7 @@ ssh_install() {
 ssh root@$ip_addr -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa 2> /dev/null <<- ENDSSH
 
 # Check to see if blue-merle is already installed.
-if opkg list | grep blue-merle &> /dev/null ; then
+if opkg list | grep blue-merle 1> /dev/null ; then
     printf "\nPackage is already installed!\n\nExiting...\n\n" ; exit 1
 else
     printf "\nStarting install.\n\nDevice will reboot upon completion...\n\n"
@@ -104,9 +104,9 @@ fi
 
 # Download and install.
 printf "Downloading blue-merle.\n"
-if curl -L $down_url -o /tmp/blue-merle.ipk &> /dev/null ; then
+if curl -L $down_url -o /tmp/blue-merle.ipk 1> /dev/null ; then
     opkg update &> /dev/null 
-    if yes | opkg install /tmp/blue-merle.ipk &> /dev/null ; then
+    if yes | opkg install /tmp/blue-merle.ipk 1> /dev/null ; then
         printf "\nDevice will now reboot.\nAfter reboot: "
         printf "Flip side-switch into the up position. (towards recessed dot)\n"
         printf "Follow on-device MCU prompts.\n\n" ; reboot
