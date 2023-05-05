@@ -64,7 +64,7 @@ parse_github() {
     local api_url="https://api.github.com/repos/$auth/$repo/releases/latest"
     local latest=$(curl -sL $api_url | grep tag_name | awk -F \" '{print $4}') &> /dev/null
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
-    if [ -z "$down_url" ] ; then
+    if [ -z "$latest" ] ; then
         # Using fallback URL.
         printf "ERROR: Unable to retrieve latest download URL from GitHub API.\n"
         printf "\nUsing default download URL.\n"
