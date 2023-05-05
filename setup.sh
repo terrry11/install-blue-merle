@@ -14,7 +14,7 @@ main() {
 # Print pre-install message.
 pre_install() {
 printf "\nWarning: Please ensure that you are running the latest firmware!\n"
-printf "Device's side-switch should be in the down position. (away from recessed dot)\n\n"
+printf "Device's side-switch should be in the down position. (away from recessed dot)\n"
 }
 
 # Define command-line arguments, prompt user for ip, validate inputs.
@@ -43,7 +43,7 @@ get_ip() {
 test_conn() {
     # Check for response with ping.
     if ping -c 1 $ip_addr &> /dev/null ; then
-        printf "\nProvided IP Address: $ip_addr\n\nDevice is responding.\n\n"
+        printf "\nDevice is responding.\n\n"
     else
         printf "\nERROR: No route to device!\nAre you behind a VPN or connected to the wrong network?\n"
         printf "Please ensure connectivity to device and try again.\n\n" ; exit 1
@@ -95,7 +95,7 @@ ssh_install() {
 ssh root@$ip_addr -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa 2> /dev/null <<- ENDSSH
 
 # Check to see if blue-merle is already installed.
-if opkg list | grep blue-merle ; then echo
+if opkg list | grep blue-merle &> /dev/null ; then
     printf "\nPackage is already installed!\n\nExiting...\n\n" ; exit 1
 else
     printf "\nStarting install.\n\nDevice will reboot upon completion...\n\n"
