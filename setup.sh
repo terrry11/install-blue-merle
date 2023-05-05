@@ -57,7 +57,7 @@ test_conn() {
     fi
 }
 
-# Query GH API for latest download URL.
+# Query GH API for latest version number and download URL.
 parse_github() {
     local auth='srlabs'
     local repo='blue-merle'
