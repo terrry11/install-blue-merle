@@ -81,11 +81,9 @@ detect_os() {
     # Android dependencies.
     if [ "$host" = "Android" ] ; then
         if ! command -v pkg &> /dev/null ; then
-            printf "\nERROR: This script must be run in Termux on Android.\n" ; exit 1
-        fi
+            printf "\nERROR: This script must be run in Termux on Android.\n" ; exit 1 ; fi
         if ! command -v ssh &> /dev/null ; then
-            pkg update ; pkg install openssh ; echo
-        fi
+            pkg update ; pkg install openssh ; echo ; fi
     fi
 }
 
@@ -104,9 +102,10 @@ fi
 
 # Download and install.
 printf "Downloading blue-merle.\n"
-if curl -L $down_url -o /tmp/blue-merle.ipk 1> /dev/null ; then
+if curl -L $down_url -o /tmp/blue-merle.ipk ; then
     opkg update &> /dev/null 
     if yes | opkg install /tmp/blue-merle.ipk 1> /dev/null ; then
+        printf "\nSUCCESS: INSTALL COMPLETED.\n"
         printf "\nDevice will now reboot.\nAfter reboot: "
         printf "Flip side-switch into the up position. (towards recessed dot)\n"
         printf "Follow on-device MCU prompts.\n\n" ; reboot
