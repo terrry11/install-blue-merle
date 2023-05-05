@@ -8,7 +8,7 @@ This Bash script installs *[blue-merle](https://github.com/srlabs/blue-merle)* o
 3.  Open a terminal window on your local machine (laptop).
 4.  Copy the following command and paste it into the terminal window:
 ```
-curl -O https://raw.githubusercontent.com/oldstreetloft/install-blue-merle/main/setup.sh ; chmod +x setup.sh ; ./setup.sh
+curl -O https://raw.githubusercontent.com/oldstreetloft/install-blue-merle/main/setup.sh ; sh setup.sh
 ```
 5.  Press Enter to run the command.
 6.  Follow the prompts to complete the installation.
