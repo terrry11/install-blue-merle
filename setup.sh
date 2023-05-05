@@ -92,10 +92,10 @@ detect_os() {
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
 #==================== Start SSH connection ====================
-ssh root@$ip_addr -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa << ENDSSH
+ssh root@$ip_addr -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa <<- ENDSSH
 
 # Check to see if blue-merle is already installed.
-echo ; if opkg list | grep blue-merle ; then
+if opkg list | grep blue-merle ; then
     printf "\nPackage is already installed!\n\nExiting...\n\n" ; exit 1
 else
     printf "\nStarting install.\n\nDevice will reboot upon completion...\n\n"
@@ -104,12 +104,12 @@ fi
 
 # Download and install.
 printf "Downloading blue-merle.\n"
-if curl -L $down_url -o /tmp/blue-merle.ipk ; then
-    opkg update
-    if yes | opkg install /tmp/blue-merle.ipk ; then
-        printf "Device will now reboot.\nAfter reboot: "
+if curl -L $down_url -o /tmp/blue-merle.ipk &> /dev/null ; then
+    opkg update &> /dev/null 
+    if yes | opkg install /tmp/blue-merle.ipk &> /dev/null ; then
+        printf "\nDevice will now reboot.\nAfter reboot: "
         printf "Flip side-switch into the up position. (towards recessed dot)\n"
-        printf "Follow on-device MCU prompts.\n" ; reboot
+        printf "Follow on-device MCU prompts.\n\n" ; reboot
     else
         printf "\nERROR: blue-merle not installed.\n" ; exit 1
     fi
