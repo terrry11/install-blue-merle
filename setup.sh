@@ -21,8 +21,8 @@ main() {
 #==================== Define functions ====================
 # Define command-line arguments, prompt user for ip, validate inputs.
 parse_arg() {
-    local valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
     if [[ $1 ]] ; then ip_addr=$1 ; fi
+    local valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
     while [[ ! $ip_addr =~ $valid_ip ]] ; do
         read -p "Enter IP address: " ip_addr ; done
 }
