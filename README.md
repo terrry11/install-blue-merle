@@ -26,6 +26,7 @@ Device's side-switch should be in the down position. (away from recessed dot)
 Enter password: <password>
 ...
 SUCCESS: INSTALL COMPLETED.
+
 After reboot: Flip side-switch up. (towards recessed dot)
 Follow on-device MCU prompts.
 
