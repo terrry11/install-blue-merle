@@ -27,7 +27,7 @@ get_ip() {
             if [[ $ip_addr =~ $valid_ip ]] ; then
                 break
             else
-                printf "\nERROR: Invalid IP address format.\nPlease enter a valid IP address.\n"
+                printf "\nPlease enter a valid IP address.\n"
             fi
         done
     fi
