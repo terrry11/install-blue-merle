@@ -6,7 +6,6 @@ auth="srlabs"
 repo="blue-merle"
 # Fallback URL
 alt_url="https://github.com/$auth/$repo/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
-
 # SSH arguments
 ssh_arg="-oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa"
 
