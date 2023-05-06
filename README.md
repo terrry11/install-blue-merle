@@ -23,6 +23,8 @@ chmod +x setup.sh
 Script executes with or without command line arguments:
 ```
 ./setup.sh <ip_address>
+```
+```
 Enter IP address: <ip_address>
 Enter password: <password>
 ...
