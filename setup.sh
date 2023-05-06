@@ -1,9 +1,13 @@
 #!/bin/bash
 
 #==================== Initialize variables ====================
+# Parse GitHub
 auth="srlabs"
 repo="blue-merle"
+# Fallback URL
 alt_url="https://github.com/$auth/$repo/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
+
+# SSH arguments
 ssh_arg="-oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa"
 
 #==================== Main function ====================
@@ -24,7 +28,7 @@ parse_arg() {
         read -p "Enter IP address: " ip_addr ; done
 }
 
-# Check to see if device and Github are responding.
+# Check to see if device and GitHub are responding.
 test_conn() {
     if ! ping -c 1 $ip_addr &> /dev/null ; then
         printf "\nERROR: No route to device!\nAre you behind a VPN or connected to the wrong network?\n"
@@ -37,7 +41,7 @@ test_conn() {
 # Query GH API for latest version number and download URL.
 parse_github() {
     local api_url="https://api.github.com/repos/$auth/$repo/releases/latest"
-    local latest=$(curl -sL $api_url | grep tag_name | awk -F \" '{print $4}') &> /dev/null
+    local latest=$(curl -sL $api_url | grep tag_name | awk -F \" '{print $4}')
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
     if [ -z "$latest" ] ; then
         printf "\nERROR: Unable to retrieve latest download URL from GitHub API.\n\n"
