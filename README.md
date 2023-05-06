@@ -16,19 +16,18 @@ curl -O https://raw.githubusercontent.com/oldstreetloft/install-blue-merle/main/
 8.  Follow on-device MCU prompts.
 
 ## Example:
-Script can run with or without command line arguments:
+Script executes with or without command line arguments:
 ```
 ./setup.sh <ip_address>
-
+Enter password: <password>
+...
 Warning: Please ensure that you are running the latest firmware!
 Device's side-switch should be in the down position. (away from recessed dot)
-
-Enter password: <password>
 ...
 SUCCESS: INSTALL COMPLETED.
 
 After reboot: Flip side-switch up. (towards recessed dot)
-Follow on-device MCU prompts.
+Follow on-device display prompts.
 
 ```
 

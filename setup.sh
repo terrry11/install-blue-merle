@@ -2,7 +2,6 @@
 
 #==================== Main function ====================
 main() {
-    pre_install             # Pre-install message.
     parse_args $1           # Get data from user.
     test_conn               # Exit if no connection.
     parse_github            # Query GH for download URL.
@@ -11,11 +10,6 @@ main() {
 }
 
 #==================== Define functions ====================
-# Print pre-install message.
-pre_install() {
-printf "\nWarning: Please ensure that you are running the latest firmware!\n"
-printf "Device's side-switch should be in the down position. (away from recessed dot)\n\n"
-}
 
 # Define command-line arguments, prompt user for ip, validate inputs.
 parse_args() {
@@ -84,10 +78,12 @@ detect_os() {
 ssh_install() {
 #==================== Start SSH connection ====================
 ssh root@$ip_addr -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa 2> /dev/null <<- ENDSSH
+printf "\nWarning: Please ensure that you are running the latest firmware!\n"
+printf "Device's side-switch should be in the down position. (away from recessed dot)\n\n"
 
 # Check to see if blue-merle is already installed.
 if opkg list | grep blue-merle 1> /dev/null ; then
-    printf "\nblue-merle already installed!\n\nExiting...\n\n" ; exit 1
+    printf "blue-merle already installed!\n\nExiting...\n\n" ; exit 1
 fi
 
 printf "Downloading blue-merle.\n\n"
@@ -106,7 +102,7 @@ fi
 
 printf "SUCCESS: INSTALL COMPLETED.\n\n"
 printf "After reboot: Flip side-switch up. (towards recessed dot)\n\n"
-printf "Follow on-device MCU prompts.\n\n"
+printf "Follow on-device display prompts.\n\n"
 ENDSSH
 #==================== End SSH connection ====================
 }
