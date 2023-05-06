@@ -21,16 +21,14 @@ parse_args() {
 # Read and validate IP Address.
 get_ip() {
     local valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
-    if [[ ! $ip_addr =~ $valid_ip ]] ; then
-        while true; do
-            echo ; read -p "Enter IP address: " ip_addr
-            if [[ $ip_addr =~ $valid_ip ]] ; then
-                break
-            else
-                printf "\nPlease enter a valid IP address.\n"
-            fi
-        done
-    fi
+    while true; do
+        if [[ ! $ip_addr =~ $valid_ip ]] ; then
+            printf "\nPlease enter a valid IP address.\n"
+            read -p "Enter IP address: " ip_addr
+        else
+            break
+        fi
+    done
 }
 
 # Check to see if device and Github are responding.
@@ -68,9 +66,11 @@ detect_os() {
     # Android dependencies.
     if [ "$host" = "Android" ] ; then
         if ! command -v pkg &> /dev/null ; then
-            printf "\nERROR: This script must be run in Termux on Android.\n\n" ; exit 1 ; fi
+            printf "\nERROR: This script must be run in Termux.\n\n" ; exit 1 ; fi
         if ! command -v ssh &> /dev/null ; then
-            pkg update ; pkg install openssh ; echo ; fi
+            pkg update &> /dev/null
+            pkg install openssh &> /dev/null
+        fi
     fi
 }
 
