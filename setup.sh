@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #==================== Initialize variables ====================
-valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
 auth="srlabs"
 repo="blue-merle"
 alt_url="https://github.com/$auth/$repo/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
@@ -19,6 +18,7 @@ main() {
 #==================== Define functions ====================
 # Define command-line arguments, prompt user for ip, validate inputs.
 parse_arg() {
+    local valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
     if [[ $1 ]] ; then ip_addr=$1 ; fi
     while [[ ! $ip_addr =~ $valid_ip ]] ; do
         read -p "Enter IP address: " ip_addr ; done
