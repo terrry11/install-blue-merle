@@ -34,7 +34,7 @@ get_ip() {
 
 # Check to see if device and Github are responding.
 test_conn() {
-    # Check for response with ping.
+    # Check for device response with ping.
     if ! ping -c 1 $ip_addr &> /dev/null ; then
         printf "\nERROR: No route to device!\nAre you behind a VPN or connected to the wrong network?\n"
         printf "Please ensure device connectivity and try again.\n\n" ; exit 1 ; fi
