@@ -25,10 +25,8 @@ Warning: Please ensure that you are running the latest firmware!
 Device's side-switch should be in the down position. (away from recessed dot)
 ...
 SUCCESS: INSTALL COMPLETED.
-
 After reboot: Flip side-switch up. (towards recessed dot)
 Follow on-device display prompts.
-
 ```
 
 ## About blue-merle:
