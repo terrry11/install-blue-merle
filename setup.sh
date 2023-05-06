@@ -4,7 +4,6 @@
 valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
 auth="srlabs"
 repo="blue-merle"
-api_url="https://api.github.com/repos/$auth/$repo/releases/latest"
 alt_url="https://github.com/$auth/$repo/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
 ssh_arg="-oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa"
 
@@ -37,6 +36,7 @@ test_conn() {
 
 # Query GH API for latest version number and download URL.
 parse_github() {
+    local api_url="https://api.github.com/repos/$auth/$repo/releases/latest"
     local latest=$(curl -sL $api_url | grep tag_name | awk -F \" '{print $4}') &> /dev/null
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
     if [ -z "$latest" ] ; then
