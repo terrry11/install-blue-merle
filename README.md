@@ -33,7 +33,7 @@ Follow on-device display prompts.
 ```
 
 ## About blue-merle:
-The *blue-merle* software package enhances anonymity and reduces forensic traceability of the **GL-E750 / Mudi 4G mobile wi-fi router ("Mudi router")**. The portable device is explicitly marketed to privacy-interested retail users.
+The *[blue-merle](https://github.com/srlabs/blue-merle)* software package enhances anonymity and reduces forensic traceability of the **GL-E750 / Mudi 4G mobile wi-fi router ("Mudi router")**. The portable device is explicitly marketed to privacy-interested retail users.
 
 *blue-merle* addresses the traceability drawbacks of the Mudi router by adding the following features to the Mudi router:
 
