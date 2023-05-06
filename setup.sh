@@ -10,7 +10,6 @@ main() {
 }
 
 #==================== Define functions ====================
-
 # Define command-line arguments, prompt user for ip, validate inputs.
 parse_args() {
     # IP address
