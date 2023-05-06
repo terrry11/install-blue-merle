@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #==================== Initialize variables ====================
+valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
 auth="srlabs"
 repo="blue-merle"
 api_url="https://api.github.com/repos/$auth/$repo/releases/latest"
 alt_url="https://github.com/$auth/$repo/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
 ssh_arg="-oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa"
-valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
 
 #==================== Main function ====================
 main() {
