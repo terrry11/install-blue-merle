@@ -26,8 +26,9 @@ Device's side-switch should be in the down position. (away from recessed dot)
 Enter password: <password>
 ...
 SUCCESS: INSTALL COMPLETED.
-printf "After reboot: Flip side-switch up. (towards recessed dot)
-printf "Follow on-device MCU prompts.
+After reboot: Flip side-switch up. (towards recessed dot)
+Follow on-device MCU prompts.
+
 ```
 
 ## About blue-merle:
