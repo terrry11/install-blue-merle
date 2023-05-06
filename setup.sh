@@ -22,13 +22,7 @@ main() {
 parse_arg() {
     # IP address
     if [[ $1 ]] ; then ip_addr=$1 ; fi
-    get_ip
-}
-
-# Read and validate IP Address.
-get_ip() {
     while [[ ! $ip_addr =~ $valid_ip ]] ; do
-        printf "\nPlease enter a valid IP address.\n\n"
         read -p "Enter IP address: " ip_addr ; done
 }
 
