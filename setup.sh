@@ -105,7 +105,7 @@ if ! yes | opkg install /tmp/blue-merle.ipk 1> /dev/null ; then
 fi
 
 printf "SUCCESS: INSTALL COMPLETED.\n\n"
-printf "After reboot: Flip side-switch into the up position.\n"
+printf "After reboot: Flip side-switch up. (towards recessed dot)\n\n"
 printf "Follow on-device MCU prompts.\n\n"
 ENDSSH
 #==================== End SSH connection ====================
