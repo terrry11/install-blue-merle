@@ -14,7 +14,7 @@ main() {
 # Print pre-install message.
 pre_install() {
 printf "\nWarning: Please ensure that you are running the latest firmware!\n"
-printf "Device's side-switch should be in the down position. (away from recessed dot)\n"
+printf "Device's side-switch should be in the down position. (away from recessed dot)\n\n"
 }
 
 # Define command-line arguments, prompt user for ip, validate inputs.
@@ -42,17 +42,13 @@ get_ip() {
 # Check to see if device and Github are responding.
 test_conn() {
     # Check for response with ping.
-    if ping -c 1 $ip_addr &> /dev/null ; then
-        printf "\nDevice is responding.\n\n"
-    else
+    if ! ping -c 1 $ip_addr &> /dev/null ; then
         printf "\nERROR: No route to device!\nAre you behind a VPN or connected to the wrong network?\n"
         printf "Please ensure connectivity to device and try again.\n\n" ; exit 1
     fi
     # Check for internet connectivity with ping.
-    if ping -c 1 github.com &> /dev/null ; then
-        printf "You are connected to the internet.\n\n"
-    else
-        printf "\nERROR: You are NOT connected to the internet.\n\n"
+    if ! ping -c 1 github.com &> /dev/null ; then
+        printf "ERROR: You are NOT connected to the internet.\n"
         printf "Please ensure internet connectivity and try again.\n\n" ; exit 1
     fi
 }
@@ -66,22 +62,19 @@ parse_github() {
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
     if [ -z "$latest" ] ; then
         # Using fallback URL.
-        printf "ERROR: Unable to retrieve latest download URL from GitHub API.\n"
-        printf "\nUsing default download URL.\n"
+        printf "ERROR: Unable to retrieve latest download URL from GitHub API.\n\n"
+        printf "Using default download URL.\n\n"
         down_url="https://github.com/srlabs/blue-merle/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
-    else
-    printf "Latest $repo version: $latest\n\nLatest GH download URL: \n$down_url\n\n"
     fi
 }
 
 # Detect the OS of the host, install dependencies.
 detect_os() {
     local host=$(uname -o)
-    printf "Host OS: $host\n\n"
     # Android dependencies.
     if [ "$host" = "Android" ] ; then
         if ! command -v pkg &> /dev/null ; then
-            printf "\nERROR: This script must be run in Termux on Android.\n" ; exit 1 ; fi
+            printf "\nERROR: This script must be run in Termux on Android.\n\n" ; exit 1 ; fi
         if ! command -v ssh &> /dev/null ; then
             pkg update ; pkg install openssh ; echo ; fi
     fi
@@ -94,28 +87,26 @@ ssh root@$ip_addr -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa 2> /de
 
 # Check to see if blue-merle is already installed.
 if opkg list | grep blue-merle 1> /dev/null ; then
-    printf "\nPackage is already installed!\n\nExiting...\n\n" ; exit 1
-else
-    printf "\nStarting install.\n\nDevice will reboot upon completion...\n\n"
-    sleep 1
+    printf "\nblue-merle already installed!\n\nExiting...\n\n" ; exit 1
 fi
 
-# Download and install.
-printf "Downloading blue-merle.\n"
-if curl -L $down_url -o /tmp/blue-merle.ipk ; then
-    opkg update &> /dev/null 
-    if yes | opkg install /tmp/blue-merle.ipk 1> /dev/null ; then
-        printf "\nSUCCESS: INSTALL COMPLETED.\n"
-        printf "\nDevice will now reboot.\nAfter reboot: "
-        printf "Flip side-switch into the up position. (towards recessed dot)\n"
-        printf "Follow on-device MCU prompts.\n\n" ; reboot
-    else
-        printf "\nERROR: blue-merle not installed.\n" ; exit 1
-    fi
-else
-    printf "\nERROR: Device is NOT connected to the internet.\n"
+printf "Downloading blue-merle.\n\n"
+if ! curl -L $down_url -o /tmp/blue-merle.ipk
+    printf "ERROR: Download failed.\n"
     printf "Please ensure internet connectivity and try again.\n\n" ; exit 1
 fi
+
+printf "Updating package list.\n\n"
+opkg update &> /dev/null
+
+printf "Installing blue-merle.\n\nDevice will reboot.\n\n"
+if ! yes | opkg install /tmp/blue-merle.ipk 1> /dev/null ; then
+    printf "ERROR: blue-merle not installed.\n\n" ; exit 1
+fi
+
+printf "SUCCESS: INSTALL COMPLETED.\n\n"
+printf "After reboot: Flip side-switch into the up position.\n"
+printf "Follow on-device MCU prompts.\n\n"
 ENDSSH
 #==================== End SSH connection ====================
 }
