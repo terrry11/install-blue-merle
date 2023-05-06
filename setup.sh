@@ -42,16 +42,15 @@ test_conn() {
 
 # Query GH API for latest version number and download URL.
 parse_github() {
-    local auth='srlabs'
-    local repo='blue-merle'
-    local api_url="https://api.github.com/repos/$auth/$repo/releases/latest"
+    local arepo="srlabs/blue-merle"
+    local api_url="https://api.github.com/repos/$arepo/releases/latest"
     local latest=$(curl -sL $api_url | grep tag_name | awk -F \" '{print $4}') &> /dev/null
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
     if [ -z "$latest" ] ; then
         # Using fallback URL.
         printf "\nERROR: Unable to retrieve latest download URL from GitHub API.\n\n"
         printf "Using default download URL.\n\n"
-        down_url="https://github.com/srlabs/blue-merle/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
+        down_url="https://github.com/$arepo/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
     fi
 }
 
@@ -73,6 +72,7 @@ detect_os() {
 ssh_install() {
 #==================== Start SSH connection ====================
 ssh root@$ip_addr -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa 2> /dev/null <<- ENDSSH
+
 printf "\nWarning: Please ensure that you are running the latest firmware!\n"
 printf "Device's side-switch should be in the down position. (away from recessed dot)\n\n"
 
