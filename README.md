@@ -4,7 +4,7 @@ This Bash script installs *[blue-merle](https://github.com/srlabs/blue-merle)* o
 
 ## Installation:
 1.  Make sure that you are running the latest firmware.
-2.  Set device's side-switch into the down position. (away from recessed dot)
+2.  Set device side-switch into the down position. (away from recessed dot)
 3.  Open a terminal window on your local machine (laptop).
 4.  Copy the following command and paste it into the terminal window:
 ```

@@ -74,7 +74,7 @@ ssh_install() {
 ssh root@$ip_addr -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa 2> /dev/null <<- ENDSSH
 
 printf "\nWarning: Please ensure that you are running the latest firmware!\n"
-printf "Set device's side-switch into the down position. (away from recessed dot)\n\n"
+printf "Set device side-switch into the down position. (away from recessed dot)\n\n"
 
 # Check to see if blue-merle is already installed.
 if opkg list | grep blue-merle 1> /dev/null ; then
