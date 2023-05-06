@@ -1,8 +1,16 @@
 #!/bin/bash
 
+#==================== Initialize variables ====================
+auth="srlabs"
+repo="blue-merle"
+api_url="https://api.github.com/repos/$auth/$repo/releases/latest"
+alt_url="https://github.com/$auth/$repo/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
+ssh_arg="-oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa"
+valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
+
 #==================== Main function ====================
 main() {
-    parse_args $@           # Get data from user.
+    parse_arg $@            # Get data from user.
     test_conn               # Exit if no connection.
     parse_github            # Query GH for download URL.
     detect_os               # Install dependencies.
@@ -11,7 +19,7 @@ main() {
 
 #==================== Define functions ====================
 # Define command-line arguments, prompt user for ip, validate inputs.
-parse_args() {
+parse_arg() {
     # IP address
     if [[ $1 ]] ; then ip_addr=$1 ; fi
     get_ip
@@ -19,7 +27,6 @@ parse_args() {
 
 # Read and validate IP Address.
 get_ip() {
-    local valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
     while [[ ! $ip_addr =~ $valid_ip ]] ; do
         printf "\nPlease enter a valid IP address.\n\n"
         read -p "Enter IP address: " ip_addr ; done
@@ -30,7 +37,7 @@ test_conn() {
     # Check for response with ping.
     if ! ping -c 1 $ip_addr &> /dev/null ; then
         printf "\nERROR: No route to device!\nAre you behind a VPN or connected to the wrong network?\n"
-        printf "Please ensure connectivity to device and try again.\n\n" ; exit 1 ; fi
+        printf "Please ensure device connectivity and try again.\n\n" ; exit 1 ; fi
     # Check for internet connectivity with ping.
     if ! ping -c 1 github.com &> /dev/null ; then
         printf "\nERROR: You are NOT connected to the internet.\n"
@@ -39,35 +46,30 @@ test_conn() {
 
 # Query GH API for latest version number and download URL.
 parse_github() {
-    local arepo="srlabs/blue-merle"
-    local api_url="https://api.github.com/repos/$arepo/releases/latest"
     local latest=$(curl -sL $api_url | grep tag_name | awk -F \" '{print $4}') &> /dev/null
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
     if [ -z "$latest" ] ; then
         # Using fallback URL.
         printf "\nERROR: Unable to retrieve latest download URL from GitHub API.\n\n"
         printf "Using default download URL.\n\n"
-        down_url="https://github.com/$arepo/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
-    fi
+        down_url=$alt_url ; fi
 }
 
 # Detect the OS of the host, install dependencies.
 detect_os() {
     local host=$(uname -o)
-    # Android dependencies.
     if [ "$host" = "Android" ] ; then
         if ! command -v pkg &> /dev/null ; then
             printf "\nERROR: This script must be run in Termux.\n\n" ; exit 1 ; fi
         if ! command -v ssh &> /dev/null ; then
             pkg update &> /dev/null
-            pkg install openssh &> /dev/null ; fi
-    fi
+            pkg install openssh &> /dev/null ; fi ;fi
 }
 
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
 #==================== Start SSH connection ====================
-ssh root@$ip_addr -oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa 2> /dev/null <<- ENDSSH
+ssh root@$ip_addr $ssh_arg 2> /dev/null <<- ENDSSH
 printf "\nWarning: Please ensure that you are running the latest firmware!\n"
 printf "Set device side-switch into the down position. (away from recessed dot)\n\n"
 
