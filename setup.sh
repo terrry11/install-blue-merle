@@ -22,7 +22,7 @@ get_ip() {
     local valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
     while true; do
         if [[ ! $ip_addr =~ $valid_ip ]] ; then
-            printf "\nPlease enter a valid IP address.\n"
+            printf "\nPlease enter a valid IP address.\n\n"
             read -p "Enter IP address: " ip_addr
         else
             break
@@ -39,7 +39,7 @@ test_conn() {
     fi
     # Check for internet connectivity with ping.
     if ! ping -c 1 github.com &> /dev/null ; then
-        printf "ERROR: You are NOT connected to the internet.\n"
+        printf "\nERROR: You are NOT connected to the internet.\n"
         printf "Please ensure internet connectivity and try again.\n\n" ; exit 1
     fi
 }
@@ -53,7 +53,7 @@ parse_github() {
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
     if [ -z "$latest" ] ; then
         # Using fallback URL.
-        printf "ERROR: Unable to retrieve latest download URL from GitHub API.\n\n"
+        printf "\nERROR: Unable to retrieve latest download URL from GitHub API.\n\n"
         printf "Using default download URL.\n\n"
         down_url="https://github.com/srlabs/blue-merle/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
     fi
