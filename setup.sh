@@ -9,7 +9,7 @@ main() {
     local down_url=''
     local auth="srlabs"
     local repo="blue-merle"
-    local alt_url="https://github.com/$auth/$repo/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
+    local alt_url="https://github.com/"$auth"/"$repo"/releases/download/v1.0/blue-merle_1.0.0-1_mips_24kc.ipk"
     # SSH arguments
     local ssh_arg="-oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa"
 
