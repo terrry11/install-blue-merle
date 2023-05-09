@@ -69,7 +69,7 @@ if opkg list | grep blue-merle 1> /dev/null ; then
     printf "blue-merle already installed!\n\nExiting...\n\n" ; exit 1 ; fi
 
 printf "Downloading blue-merle.\n\n"
-if ! curl -L $down_url -o /tmp/blue-merle.ipk
+if ! curl -sL $down_url -o /tmp/blue-merle.ipk
     printf "ERROR: Download failed.\n"
     printf "Please ensure internet connectivity and try again.\n\n" ; exit 1 ; fi
 
