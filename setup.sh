@@ -23,7 +23,7 @@ parse_arg() {
     if [ -n "$1" ] ; then ip_addr=$1 ; fi
     valid_ip="^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$"
     while ! echo "$ip_addr" | grep -Eq "$valid_ip" ; do
-        printf "Enter IP address: " ; read -r ip_addr ; done
+        printf "Enter IP address: " ; read ip_addr ; done
 }
 
 # Check to see if device and GitHub are responding.
