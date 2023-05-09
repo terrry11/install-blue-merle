@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#==================== Main function ====================
+#======================================== Main function ========================================
 # Main function is executed from the end of the script so incomplete downloads dont fuck shit up.
 main() {
     # Parse GitHub
@@ -10,14 +10,14 @@ main() {
     # SSH arguments
     ssh_arg="-oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa"
 
-    parse_arg "$@"              # Get data from user.
-    test_conn                   # Exit if no connection.
-    parse_github                # Query GH for download URL.
-    detect_os                   # Install dependencies.
-    ssh_install                 # Install script.
+    parse_arg "$@"                      # Get data from user.
+    test_conn                           # Exit if no connection.
+    parse_github                        # Query GH for download URL.
+    detect_os                           # Install dependencies.
+    ssh_install                         # Install script.
 }
 
-#==================== Define functions ====================
+#======================================== Define functions ========================================
 # Define command-line arguments, prompt user for ip, validate inputs.
 parse_arg() {
     if [ -n "$1" ] ; then ip_addr=$1 ; fi
@@ -59,7 +59,7 @@ detect_os() {
 
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
-#==================== Start SSH connection ====================
+#======================================== Start SSH connection ========================================
 ssh root@"$ip_addr" "$ssh_arg" 2> /dev/null <<- ENDSSH
 printf "\nWarning: Please ensure that you are running the latest firmware!\n"
 printf "Set device side-switch into the down position. (away from recessed dot)\n\n"
@@ -73,8 +73,7 @@ if ! curl -L $down_url -o /tmp/blue-merle.ipk
     printf "ERROR: Download failed.\n"
     printf "Please ensure internet connectivity and try again.\n\n" ; exit 1 ; fi
 
-printf "Updating package list.\n\n"
-opkg update 1> /dev/null
+printf "Updating package list.\n\n" ; opkg update 1> /dev/null
 
 printf "Installing blue-merle.\n\nDevice will reboot.\n\n"
 if ! yes | opkg install /tmp/blue-merle.ipk 1> /dev/null ; then
@@ -84,8 +83,8 @@ printf "SUCCESS: INSTALL COMPLETED.\n\n"
 printf "After reboot: Flip side-switch up. (towards recessed dot)\n\n"
 printf "Follow on-device display prompts.\n\n"
 ENDSSH
-#==================== End SSH connection ====================
+#======================================== End SSH connection ========================================
 }
 
-#==================== Start execution ====================
+#======================================== Start execution ========================================
 main "$@"
