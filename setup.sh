@@ -26,12 +26,8 @@ parse_arg() {
 
 # Check to see if device and GitHub are responding.
 test_conn() {
-    if ! ping -c 1 "$ip_addr" 1> /dev/null ; then
-        printf "\nERROR: No route to device!\nAre you behind a VPN or connected to the wrong network?\n"
-        printf "Please ensure device connectivity and try again.\n\n" ; exit 1 ; fi
-    if ! ping -c 1 github.com 1> /dev/null ; then
-        printf "\nERROR: You are NOT connected to the internet.\n"
-        printf "Please ensure internet connectivity and try again.\n\n" ; exit 1 ; fi
+    ! ping -c 1 "$ip_addr" 1> /dev/null && printf "\nERROR: No route to device!\n\n" ; exit 1
+    ! ping -c 1 github.com 1> /dev/null && printf "\nERROR: No internet connection.\n\n" ; exit 1
 }
 
 # Query GH API for latest version number and download URL.
@@ -39,20 +35,17 @@ parse_github() {
     api_url="https://api.github.com/repos/$auth/$repo/releases/latest"
     latest=$(curl -sL $api_url | grep tag_name | awk -F \" '{print $4}')
     down_url=$(curl -sL $api_url | grep browser_download | awk -F \" '{print $4}')
-    if [ -z "$latest" ] ; then
-        printf "\nERROR: Unable to retrieve latest download URL from GitHub API.\n\n"
-        printf "Using alternate download URL.\n\n" ; down_url=$alt_url ; fi
+    [ -z "$latest" ] && down_url=$alt_url && printf "\nUsing fallback URL.\n\n"
 }
+
 
 # Detect the OS of the host, install dependencies.
 detect_os() {
     host=$(uname -o)
-    if [ "$host" = "Android" ] ; then
-        if ! command -v pkg 1> /dev/null ; then
-            printf "\nERROR: This script must be run in Termux.\n\n" ; exit 1 ; fi
-        if ! command -v ssh 1> /dev/null ; then
-            printf "\nUpdating package list.\n\n" ; pkg update 1> /dev/null
-            printf "\nInstalling openssh.\n\n" ; pkg install openssh 1> /dev/null ; fi ;fi
+    case "$host" in
+        "Android")
+            ! command -v pkg 1> /dev/null && printf "\nERROR: Termux required.\n\n" && exit 1
+            ! command -v ssh 1> /dev/null && pkg update && pkg install openssh ;; esac
 }
 
 # Commands sent over SSH stdin as a heredoc.
@@ -63,19 +56,15 @@ printf "\nWarning: Please ensure that you are running the latest firmware!\n"
 printf "Set device side-switch into the down position. (away from recessed dot)\n\n"
 
 # Check to see if blue-merle is already installed.
-if opkg list | grep blue-merle 1> /dev/null ; then
-    printf "blue-merle already installed!\n\nExiting...\n\n" ; exit 1 ; fi
+opkg list | grep blue-merle 1> /dev/null && printf "Already installed!\n\n" ; exit 1
 
 printf "Downloading blue-merle.\n\n"
-if ! curl -sL $down_url -o /tmp/blue-merle.ipk
-    printf "ERROR: Download failed.\n"
-    printf "Please ensure internet connectivity and try again.\n\n" ; exit 1 ; fi
+! curl -sL $down_url -o /tmp/blue-merle.ipk && printf "ERROR: Download failed.\n\n" ; exit 1
 
 printf "Updating package list.\n\n" ; opkg update 1> /dev/null
 
 printf "Installing blue-merle.\n\nDevice will reboot.\n\n"
-if ! yes | opkg install /tmp/blue-merle.ipk 1> /dev/null ; then
-    printf "ERROR: blue-merle not installed.\n\n" ; exit 1 ; fi
+! yes | opkg install /tmp/blue-merle.ipk 1> /dev/null && printf "ERROR: Install failed.\n\n" ; exit 1
 
 printf "SUCCESS: INSTALL COMPLETED.\n\n"
 printf "After reboot: Flip side-switch up. (towards recessed dot)\n\n"
