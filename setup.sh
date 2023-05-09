@@ -26,8 +26,8 @@ parse_arg() {
 
 # Check to see if device and GitHub are responding.
 test_conn() {
-    ! ping -c 1 "$ip_addr" 1> /dev/null && printf "\nERROR: No route to device!\n\n" ; exit 1
-    ! ping -c 1 github.com 1> /dev/null && printf "\nERROR: No internet connection.\n\n" ; exit 1
+    ! ping -c 1 "$ip_addr" 1> /dev/null && printf "\nERROR: No route to device!\n\n" && exit 1
+    ! ping -c 1 github.com 1> /dev/null && printf "\nERROR: No internet connection.\n\n" && exit 1
 }
 
 # Query GH API for latest version number and download URL.
@@ -51,20 +51,20 @@ detect_os() {
 # Commands sent over SSH stdin as a heredoc.
 ssh_install() {
 #======================================== Start SSH connection ========================================
-ssh root@"$ip_addr" "$ssh_arg" 2> /dev/null <<- ENDSSH
+ssh root@$ip_addr $ssh_arg 2> /dev/null <<- ENDSSH
 printf "\nWarning: Please ensure that you are running the latest firmware!\n"
 printf "Set device side-switch into the down position. (away from recessed dot)\n\n"
 
 # Check to see if blue-merle is already installed.
-opkg list | grep blue-merle 1> /dev/null && printf "Already installed!\n\n" ; exit 1
+opkg list | grep blue-merle 1> /dev/null && printf "Already installed!\n\n" && exit 1
 
 printf "Downloading blue-merle.\n\n"
-! curl -sL $down_url -o /tmp/blue-merle.ipk && printf "ERROR: Download failed.\n\n" ; exit 1
+! curl -sL $down_url -o /tmp/blue-merle.ipk && printf "ERROR: Download failed.\n\n" && exit 1
 
 printf "Updating package list.\n\n" ; opkg update 1> /dev/null
 
 printf "Installing blue-merle.\n\nDevice will reboot.\n\n"
-! yes | opkg install /tmp/blue-merle.ipk 1> /dev/null && printf "ERROR: Install failed.\n\n" ; exit 1
+! yes | opkg install /tmp/blue-merle.ipk 1> /dev/null && printf "ERROR: Install failed.\n\n" && exit 1
 
 printf "SUCCESS: INSTALL COMPLETED.\n\n"
 printf "After reboot: Flip side-switch up. (towards recessed dot)\n\n"
