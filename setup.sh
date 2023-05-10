@@ -43,7 +43,6 @@ parse_github() {
     [ -z "$latest" ] && down_url=$alt_url && printf "\nUsing fallback URL.\n\n"
 }
 
-
 # Detect the OS of the host, install dependencies.
 detect_os() {
     host=$(uname -o)
