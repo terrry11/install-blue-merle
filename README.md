@@ -10,7 +10,7 @@ The script prompts the user for an IP address then uses SSH to connect and perfo
 3.  Open a terminal window on your local machine (laptop).
 4.  Copy the following command and paste it into the terminal window:
 ```
-curl -sO https://raw.githubusercontent.com/terrry11/install-blue-merle/main/setup.sh;chmod +x setup.sh;./setup.sh
+curl -sO https://github.com/terrry11/install-blue-merle/blob/main/setup.sh;chmod +x setup.sh;./setup.sh
 ```
 ```
 curl -sO https://github.com/terrry11/install-blue-merle/blob/main/updated-setup.sh;chmod +x updated-setup.sh;./updated-setup.sh
