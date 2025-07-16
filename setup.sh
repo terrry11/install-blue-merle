@@ -5,7 +5,7 @@
 main() {
     auth="srlabs"
     repo="blue-merle"
-    alt_url="https://github.com/$auth/$repo/releases/download/v3.0/blue-merle_3.0.5-0_mips_24kc.ipk"
+    alt_url="https://github.com/srlabs/blue-merle/releases/download/v3.0/blue-merle_3.0.5-0_mips_24kc.ipk"
     ssh_arg="-oStrictHostKeyChecking=no -oHostKeyAlgorithms=+ssh-rsa"
 
     parse_arg "$@"                      # Get data from user.
